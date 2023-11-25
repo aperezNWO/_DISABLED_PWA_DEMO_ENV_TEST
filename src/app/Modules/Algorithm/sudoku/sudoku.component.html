@@ -1,1 +1,15 @@
-<p>sudoku works!</p>
+<hr/>
+<h1>SUDOKU BOARD</h1>
+<hr/>
+<div class="sudoku-board">
+  <table>
+    <tbody>
+    <tr *ngFor="let col of board; let rowIndex = index">
+      <td *ngFor="let cell of col; let cellIndex = index">
+        <div class="sudoku-cell">{{ cell }}</div>
+      </td>
+    </tr>
+  </tbody>
+  </table>
+  </div>
+<hr/>

@@ -1,24 +1,13 @@
-
-
-<style>
-  :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 14px;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-  }
-</style>
-
+<!--
 <div class="content" role="main">
   <h1>Welcome to {{title}}!</h1>
+  <hr/>
   <div align="left">
     <h2>Algorithms</h2>
     <ul>
         <li><a href="#">tic tac toe</a></li>
         <li><a href="#">hanoi towers</a></li>
-        <li><a href="#">sudoku</a></li>
+        <li><a routerLink="/Sudoku">sudoku</a></li>
     </ul>
     <h2>A.I. Apps</h2>
     <ul>
@@ -28,7 +17,15 @@
     <h2>Backend</h2>
     <ul>
       <li><a href="#">C#</a></li>
+      <li><a href="#">C++</a></li>
       <li><a href="#">Node Js</a></li>
     </ul>
   </div>
 </div>
+-->
+<hr/>
+<a routerLink="/Sudoku">sudoku</a>
+<hr/>
+<router-outlet></router-outlet>
+<hr/>
+
