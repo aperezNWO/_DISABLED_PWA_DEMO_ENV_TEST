@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component          }    from '@angular/core';
+import { CommonModule       } from '@angular/common';
 
 @Component({
   selector: 'app-hanoi-towers',
@@ -9,5 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './hanoi-towers.component.css'
 })
 export class HanoiTowersComponent {
-
+  //
 }

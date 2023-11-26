@@ -1,11 +1,13 @@
-import { Component  } from '@angular/core';
-
+import { Component, OnInit, ViewChild  }  from '@angular/core';
+import { _languageName                 }  from '../../../Models/algorithm-models.model';
+//
 @Component({
   selector: 'app-sudoku',
   templateUrl: './sudoku.component.html',
   styleUrl: './sudoku.component.css'
 })
-export class SudokuComponent {
+export class SudokuComponent implements OnInit {
+  //
   board: number[][] = [    
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
     [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -17,6 +19,46 @@ export class SudokuComponent {
     [0, 0, 0, 4, 1, 9, 0, 0, 5],
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
   ];
+  //
+  protected tituloListadoLenguajes                   : string = "Seleccione Lenguaje";
+  //
+  @ViewChild('_languajeList')    _languajeList       : any;
+  //
+  public __languajeList                              : any;
+  //
+  public _cppSourceDivHidden                         : boolean = true;
+  //
+  ngOnInit():void
+  {
+      //-----------------------------------------------------------------------------
+      // LENGUAJES DE PROGRAMACION
+      //-----------------------------------------------------------------------------
+      this.__languajeList = new Array();
+      //
+      this.__languajeList.push( new _languageName(0,"(SELECCIONE OPCION..)"));        
+      this.__languajeList.push( new _languageName(1,"C++"));  
+      this.__languajeList.push( new _languageName(2,"C#"));        
+      this.__languajeList.push( new _languageName(3,"Typescript (Node.js)"));        
+   }
+  //
+  public _cppSourceDivHiddenChaged():void  
+  {
+    //
+    console.log("SUDOKU - [DIV CPP SOURCE CHANGED]");
+    //
+    let _selectedIndex       : number  = this._languajeList.nativeElement.options.selectedIndex;
+    this._cppSourceDivHidden = (_selectedIndex != 1) // item 2 = "c++"
+  }
+  //
+  public _GetSudoku():void
+  {
+
+  }
+  //
+  public _SolveSudoku():void
+  {
+
+  }
 }
 
 /*

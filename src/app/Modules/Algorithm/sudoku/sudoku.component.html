@@ -1,5 +1,21 @@
 <h1>SUDOKU BOARD</h1>
 <hr/>
+    <div id="LangListDiv" align="left">
+        <span id="tituloListadoLenguajes">{{this.tituloListadoLenguajes}}</span>
+        <label for="LangList"></label>
+        &nbsp;&nbsp;
+        <select   id="LanguageList"
+                        name="LanguajeList"
+                        #_languajeList
+                        (change)="this._cppSourceDivHiddenChaged()">
+                        <option *ngFor="let _languageName of __languajeList" [value]="_languageName._index">{{_languageName._value}}</option>
+        </select>
+        &nbsp;&nbsp;
+        <span id="cppSoureDiv" [hidden]="this._cppSourceDivHidden">
+            <a href="javascript: void window.open('https://github.com/aperezNWO/CppBuilder01/')">[View Source]</a>
+        </span>
+    </div>
+<hr/>
 <div class="sudoku-board">
   <table>
     <tbody>
@@ -12,5 +28,13 @@
   </table>
   </div>
 <hr/>
+<div align="left">
+    <input id="GetSudoku"   type="button" title="[GENERAR]"  value="[GENERAR]"   (click)="this._GetSudoku()" 
+    [disabled]="false">
+    |
+    <input id="SolveSudoku" type="button" title="[RESOLVER]" value="[RESOLVER]"  (click)="this._SolveSudoku()"
+    [disabled]="false">
+</div>
+<hr />
 <a routerLink="/Home">[Home]</a>      
 
