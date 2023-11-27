@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild  }  from '@angular/core';
+import { AlgorithmService              }  from 'src/app/Services/algorithm.service';
+import { Observable                    }  from 'rxjs';
 import { _languageName                 }  from '../../../Models/algorithm-models.model';
 //
 @Component({
@@ -28,6 +30,14 @@ export class SudokuComponent implements OnInit {
   //
   public _cppSourceDivHidden                         : boolean = true;
   //
+  public _sudokuGenerated                            : string = "";
+  //
+  constructor(private algorithmService: AlgorithmService)
+  {
+      //
+      console.log("[SUDOKU - INGRESO]");
+  }
+  //
   ngOnInit():void
   {
       //-----------------------------------------------------------------------------
@@ -52,12 +62,35 @@ export class SudokuComponent implements OnInit {
   //
   public _GetSudoku():void
   {
-
+      // https://webapiangulardemo.somee.com/Demos/Sudoku_Generate_CPP
+      console.log("[SUDOKU - GENERATE]");
+      //
+      let generatedSudoku : Observable<string> = this.algorithmService._GetSudoku();
+      //
+      const generatedSudokuObserver = {
+        next: (jsondata: string)     => { 
+          //
+          console.log('[SUDOKU - GENERATE] - (return): ' + jsondata);
+          //
+          this._sudokuGenerated = jsondata;
+        },
+        error           : (err: Error)      => {
+          //
+          console.error('[SUDOKU - GENERATE] - (ERROR) : ' + JSON.stringify(err.message));
+        },
+        complete        : ()                => {
+          //
+          console.log('[SUDOKU - GENERATE] -  (COMPLETE)');
+        },
+      };
+      //
+      generatedSudoku.subscribe(generatedSudokuObserver);
   }
   //
   public _SolveSudoku():void
   {
-
+     //
+     console.log("[SUDOKU - SOLVE]");
   }
 }
 
