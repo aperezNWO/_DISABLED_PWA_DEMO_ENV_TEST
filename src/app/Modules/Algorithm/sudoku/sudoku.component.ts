@@ -10,7 +10,8 @@ import { _languageName                 }  from '../../../Models/algorithm-models
 })
 export class SudokuComponent implements OnInit {
   //
-  board: number[][] = [    
+  board: number[][] = [];
+  /*    
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
     [6, 0, 0, 1, 9, 5, 0, 0, 0],
     [0, 9, 8, 0, 0, 0, 0, 6, 0],
@@ -20,9 +21,10 @@ export class SudokuComponent implements OnInit {
     [0, 6, 0, 0, 0, 0, 2, 8, 0],
     [0, 0, 0, 4, 1, 9, 0, 0, 5],
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
-  ];
+  */
   //
   protected tituloListadoLenguajes                   : string = "Seleccione Lenguaje";
+  protected btnGenerateCaption                       : string = "[GENERAR]";
   //
   @ViewChild('_languajeList')    _languajeList       : any;
   //
@@ -45,10 +47,14 @@ export class SudokuComponent implements OnInit {
       //-----------------------------------------------------------------------------
       this.__languajeList = new Array();
       //
-      this.__languajeList.push( new _languageName(0,"(SELECCIONE OPCION..)"));        
-      this.__languajeList.push( new _languageName(1,"C++"));  
-      this.__languajeList.push( new _languageName(2,"C#"));        
-      this.__languajeList.push( new _languageName(3,"Typescript (Node.js)"));        
+      this.__languajeList.push( new _languageName(0,"(SELECCIONE OPCION..)",false));        
+      this.__languajeList.push( new _languageName(1,"C++",true));  
+      this.__languajeList.push( new _languageName(2,"C#",false));        
+      this.__languajeList.push( new _languageName(3,"Typescript (Node.js)",false));     
+      //
+      this._GetSudoku();  
+      //
+      this._cppSourceDivHidden = false; 
    }
   //
   public _cppSourceDivHiddenChaged():void  
@@ -62,8 +68,10 @@ export class SudokuComponent implements OnInit {
   //
   public _GetSudoku():void
   {
-      // https://webapiangulardemo.somee.com/Demos/Sudoku_Generate_CPP
+      // 
       console.log("[SUDOKU - GENERATE]");
+      //
+      this.btnGenerateCaption = "[..generando...]";
       //
       let generatedSudoku : Observable<string> = this.algorithmService._GetSudoku();
       //
@@ -73,6 +81,25 @@ export class SudokuComponent implements OnInit {
           console.log('[SUDOKU - GENERATE] - (return): ' + jsondata);
           //
           this._sudokuGenerated = jsondata;
+          //
+          jsondata                        = jsondata.replaceAll("[","");
+          jsondata                        = jsondata.replaceAll("]","");
+          jsondata                        = jsondata.replaceAll("},","|");
+          jsondata                        = jsondata.replaceAll("{","");
+          let jsonDataArray    : string[] = jsondata.split("|");
+          //
+          this.board = [];
+          //
+          for (let i = 0; i < 9; i++) {
+            const row: number[] = [];
+            console.log(jsonDataArray[i]);
+            const   rowString : string[] = jsonDataArray[i].split(",");
+            for (let j = 0; j < 9; j++) {
+              //row.push(i * 3 + j);
+              row.push(parseInt(rowString[j]));
+            }
+            this.board.push(row);
+          }
         },
         error           : (err: Error)      => {
           //
@@ -81,6 +108,8 @@ export class SudokuComponent implements OnInit {
         complete        : ()                => {
           //
           console.log('[SUDOKU - GENERATE] -  (COMPLETE)');
+          //
+          this.btnGenerateCaption = "[GENERAR]";
         },
       };
       //

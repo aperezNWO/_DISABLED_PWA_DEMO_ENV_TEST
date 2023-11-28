@@ -8,11 +8,14 @@
                         name="LanguajeList"
                         #_languajeList
                         (change)="this._cppSourceDivHiddenChaged()">
-                        <option *ngFor="let _languageName of __languajeList" [value]="_languageName._index">{{_languageName._value}}</option>
+                        <option *ngFor="let _languageName of __languajeList" 
+                               [value]   ="_languageName._index"
+                               [selected]="_languageName._selected">{{_languageName._value}}
+                        </option>
         </select>
         &nbsp;&nbsp;
         <span id="cppSoureDiv" [hidden]="this._cppSourceDivHidden">
-            <a href="javascript: void window.open('https://github.com/aperezNWO/CppBuilder01/')">[View Source]</a>
+            <a href="javascript: void window.open('https://github.com/aperezNWO/CppBuilder01/blob/master/Project2/Sudoku.cpp')">[View Source]</a>
         </span>
     </div>
 <hr/>
@@ -29,10 +32,10 @@
   </div>
 <hr/>
 <div align="left">
-    <input id="GetSudoku"   type="button" title="[GENERAR]"  value="[GENERAR]"   (click)="this._GetSudoku()" 
-    [disabled]="false">
+    <input id="GetSudoku"   type="button" [value]="this.btnGenerateCaption"   (click)="this._GetSudoku()" 
+    [disabled]="(this.btnGenerateCaption == '[..generando...]')">
     |
-    <input id="SolveSudoku" type="button" title="[RESOLVER]" value="[RESOLVER]"  (click)="this._SolveSudoku()"
+    <input id="SolveSudoku" type="button" value="[RESOLVER]"  (click)="this._SolveSudoku()"
     [disabled]="false">
 </div>
 <hr />
