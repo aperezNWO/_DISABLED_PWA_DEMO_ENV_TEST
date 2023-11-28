@@ -25,12 +25,15 @@ export class SudokuComponent implements OnInit {
   //
   protected tituloListadoLenguajes                   : string = "Seleccione Lenguaje";
   protected btnGenerateCaption                       : string = "[GENERAR]";
+  protected btnSolveCaption                          : string = "[RESOLVER]";
   //
   @ViewChild('_languajeList')    _languajeList       : any;
   //
   public __languajeList                              : any;
   //
   public _cppSourceDivHidden                         : boolean = true;
+  //
+  public sudokuSolved                                : boolean = false;
   //
   public _sudokuGenerated                            : string = "";
   //
@@ -52,9 +55,9 @@ export class SudokuComponent implements OnInit {
       this.__languajeList.push( new _languageName(2,"C#",false));        
       this.__languajeList.push( new _languageName(3,"Typescript (Node.js)",false));     
       //
-      this._GetSudoku();  
-      //
       this._cppSourceDivHidden = false; 
+      //
+      this._GetSudoku();  
    }
   //
   public _cppSourceDivHiddenChaged():void  
@@ -71,7 +74,12 @@ export class SudokuComponent implements OnInit {
       // 
       console.log("[SUDOKU - GENERATE]");
       //
-      this.btnGenerateCaption = "[..generando...]";
+      if (this._cppSourceDivHidden == true)  // language = c++
+          return;
+      //
+      this.sudokuSolved       = false;
+      //
+      this.btnGenerateCaption = "[...generando...]";
       //
       let generatedSudoku : Observable<string> = this.algorithmService._GetSudoku();
       //
@@ -86,6 +94,7 @@ export class SudokuComponent implements OnInit {
           jsondata                        = jsondata.replaceAll("]","");
           jsondata                        = jsondata.replaceAll("},","|");
           jsondata                        = jsondata.replaceAll("{","");
+          jsondata                        = jsondata.replaceAll("}","");
           let jsonDataArray    : string[] = jsondata.split("|");
           //
           this.board = [];
@@ -119,7 +128,57 @@ export class SudokuComponent implements OnInit {
   public _SolveSudoku():void
   {
      //
-     console.log("[SUDOKU - SOLVE]");
+     console.log("[SUDOKU - SOLVE] \n" + this._sudokuGenerated);
+     //
+     if (this._cppSourceDivHidden == true)  // language = c++
+        return;
+     //
+     this.sudokuSolved       = true;
+     //
+     this.btnSolveCaption = "[...resolviendo...]";
+     //
+     let solveSudoku : Observable<string> = this.algorithmService._SolveSudoku(this._sudokuGenerated );
+     //
+     const solveSudokuObserver = {
+        next: (jsondata: string)     => { 
+          //
+          console.log('[SUDOKU - SOLVE] - (return): ' + jsondata);
+          //
+          this._sudokuGenerated           = jsondata;
+          //
+          jsondata                        = jsondata.replaceAll("[","");
+          jsondata                        = jsondata.replaceAll("]","");
+          jsondata                        = jsondata.replaceAll("},","|");
+          jsondata                        = jsondata.replaceAll("{","");
+          jsondata                        = jsondata.replaceAll("}","");
+          let jsonDataArray    : string[] = jsondata.split("|");
+          //
+          this.board = [];
+          //
+          for (let i = 0; i < 9; i++) {
+            const row: number[] = [];
+            console.log(jsonDataArray[i]);
+            const   rowString : string[] = jsonDataArray[i].split(",");
+            for (let j = 0; j < 9; j++) {
+              //row.push(i * 3 + j);
+              row.push(parseInt(rowString[j]));
+            }
+            this.board.push(row);
+          }
+        },
+        error           : (err: Error)      => {
+          //
+          console.error('[SUDOKU - SOLVE] - (ERROR) : ' + JSON.stringify(err.message));
+        },
+        complete        : ()                => {
+          //
+          console.log('[SUDOKU - SOLVE] -  (COMPLETE)');
+          //
+          this.btnSolveCaption = "[RESOLVER]";
+        },
+     };
+     //
+     solveSudoku.subscribe(solveSudokuObserver);
   }
 }
 

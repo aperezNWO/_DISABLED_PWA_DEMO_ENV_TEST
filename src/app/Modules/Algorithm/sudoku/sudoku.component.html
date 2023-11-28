@@ -33,10 +33,13 @@
 <hr/>
 <div align="left">
     <input id="GetSudoku"   type="button" [value]="this.btnGenerateCaption"   (click)="this._GetSudoku()" 
-    [disabled]="(this.btnGenerateCaption == '[..generando...]')">
+    [disabled]="(this.btnGenerateCaption == '[...generando...]') ||
+                (this.btnSolveCaption    == '[...resolviendo...]')">
     |
-    <input id="SolveSudoku" type="button" value="[RESOLVER]"  (click)="this._SolveSudoku()"
-    [disabled]="false">
+    <input id="SolveSudoku" type="button" [value]="this.btnSolveCaption"  (click)="this._SolveSudoku()"
+    [disabled]="(this.btnSolveCaption    == '[...resolviendo...]') ||
+                (this.btnGenerateCaption == '[...generando...]')   ||
+                (this.sudokuSolved       == true)">
 </div>
 <hr />
 <a routerLink="/Home">[Home]</a>      
