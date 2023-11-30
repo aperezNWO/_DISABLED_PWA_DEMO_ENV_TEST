@@ -8,9 +8,9 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 //
 const routes = [
-  { path: 'Sudoku', component: SudokuComponent },
-  { path: 'Home', component: HomeComponent },
-  { path: '**', component: AppComponent },
+  { path: 'Home'  , component: HomeComponent     },
+  { path: 'Sudoku', component: SudokuComponent   },
+  { path: '**'    , component: AppComponent      },
 ];
 @NgModule({
   declarations: [AppComponent, HomeComponent, SudokuComponent],
