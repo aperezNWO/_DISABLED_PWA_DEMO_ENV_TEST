@@ -44,7 +44,7 @@ export class AlgorithmService {
   //
   _GetSudoku_NodeJS(): Observable<string> {
     //
-    let p_url: string = 'https://ms7tks-3000.csb.app/Sudoku_Generate_NodeJS';
+    let p_url: string = 'https://ms7tks-4000.csb.app/Sudoku_Generate_NodeJS';
     //
     let sudokuGenerated: Observable<string> = this.http.get<string>(
       p_url,
@@ -64,5 +64,19 @@ export class AlgorithmService {
     );
     //
     return sudokuSolved;
+  }
+  //
+  _TestNodeJs(): Observable<string> {
+    //
+    let p_url: string = `https://ms7tks-4000.csb.app/databaseconnect`;
+    //
+    let nodeJsOutput: Observable<string> = this.http.get<string>(
+      p_url,
+      this.HTTPOptions_Text,
+    );
+    //
+    console.log('Testing Url : ' + p_url);
+    //
+    return nodeJsOutput;
   }
 }

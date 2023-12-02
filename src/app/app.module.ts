@@ -4,13 +4,15 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Modules/home/home.component';
 import { SudokuComponent } from './Modules/Games/sudoku/sudoku.component';
+import { UntTestingComponent } from './Modules/UnitTesting/unt-testing/unt-testing.component';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 //
 const routes = [
-  { path: 'Home'  , component: HomeComponent     },
-  { path: 'Sudoku', component: SudokuComponent   },
-  { path: '**'    , component: AppComponent      },
+  { path: 'Home', component: HomeComponent },
+  { path: 'Sudoku', component: SudokuComponent },
+  { path: 'UnitTesting', component: UntTestingComponent },
+  { path: '**', component: AppComponent },
 ];
 @NgModule({
   declarations: [AppComponent, HomeComponent, SudokuComponent],
