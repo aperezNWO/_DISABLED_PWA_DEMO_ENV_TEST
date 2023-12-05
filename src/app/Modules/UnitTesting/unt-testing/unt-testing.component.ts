@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router    } from '@angular/router';
 import { AlgorithmService } from 'src/app/Services/algorithm.service';
 import { Observable } from 'rxjs';
 //
@@ -17,8 +18,13 @@ export class UntTestingComponent {
   //
   protected BtnTestNodeJSCaption : string = "[TEST NODE.JS]";
   //
-  constructor(private algorithmService: AlgorithmService) {
+  constructor(private algorithmService: AlgorithmService, private router : Router) {
     //
+  }
+  //
+  RedirectHome(): void {
+      //
+      this.router.navigateByUrl("/Home");
   }
   //
   TestNodeJs(): void {
