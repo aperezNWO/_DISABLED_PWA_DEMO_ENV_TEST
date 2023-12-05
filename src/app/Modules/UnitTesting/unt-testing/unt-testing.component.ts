@@ -13,6 +13,10 @@ import { Observable } from 'rxjs';
 //
 export class UntTestingComponent {
   //
+  protected lblStatusNodeJs : string = "";
+  //
+  protected BtnTestNodeJSCaption : string = "[TEST NODE.JS]";
+  //
   constructor(private algorithmService: AlgorithmService) {
     //
   }
@@ -21,16 +25,22 @@ export class UntTestingComponent {
     //
     console.log('[TEST NODE.JS] \n');
     //
+    this.BtnTestNodeJSCaption  = "...(retrieving data)...";
+    //
     let testNodeJsObservable: Observable<string> =
       this.algorithmService._TestNodeJs();
     //
     const testNodeJsObserver = {
       next: (jsondata: string) => {
         //
+        this.lblStatusNodeJs = JSON.parse(jsondata)['recordsets'][0][0]['NombreCompleto'];
+        //
         console.log(
           '[TEST - NODEJS] - (return): ' +
-            JSON.parse(jsondata)['recordsets'][0][0]['NombreCompleto'],
+            this.lblStatusNodeJs,
         );
+        //
+        this.BtnTestNodeJSCaption = '[TEST NODE.JS]';
       },
       error: (err: Error) => {
         //

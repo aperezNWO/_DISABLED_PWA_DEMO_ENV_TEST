@@ -1,5 +1,10 @@
-<p>unt-testing works!</p>
-<hr>
-<input type="button" (click)="this.TestNodeJs()" value="[TEST NODE.JS]">
-<hr>
-<a routerLink="/Home">[Home]</a>  
+<div align="left">
+    <h1>[NODE.JS]</h1>
+    <hr>
+    <input type="button" (click)="this.TestNodeJs()" value="{{this.BtnTestNodeJSCaption}}" [disabled]="!(this.BtnTestNodeJSCaption == '[TEST NODE.JS]')">
+    <hr>
+    <label id="lblStatusNodeJs">Test Result :[{{this.lblStatusNodeJs}}]</label>
+</div>
+<hr />
+<a href='/Home'>[Home]</a>      
+
