@@ -25,7 +25,7 @@ Here's an example using the angular-cli-ghpages package:
 npm install -g angular-cli-ghpages
 
 # Deploy the built application to GitHub Pages
-npx ngh --dir=dist/your-angular-app
+npx ngh --dir=dist/sandbox
 
 Replace your-angular-app with the name of your Angular app's directory 
 where the build artifacts are located.
