@@ -52,9 +52,8 @@ export class SudokuComponent implements OnInit {
       new _languageName(0, '(SELECCIONE OPCION..)', false),
     );
     //
-    this.__languajeList.push(new _languageName(1, 'C++', true));
-    this.__languajeList.push(new _languageName(2, '(Node.js)', false));
-    this.__languajeList.push(new _languageName(3, 'C#', false));
+    this.__languajeList.push(new _languageName(1, 'C++'        , true));
+    this.__languajeList.push(new _languageName(2, '(Node.js)'  , false));
     //
     this._cppSourceDivHidden = false;
     //
@@ -150,9 +149,20 @@ export class SudokuComponent implements OnInit {
     //
     this.btnSolveCaption = '[...resolviendo...]';
     //
-    let solveSudoku: Observable<string> = this.algorithmService._SolveSudoku(
-      this._sudokuGenerated,
-    );
+    let solveSudoku: Observable<string>;
+    //
+    let selectedIndex: number = this._languajeList.nativeElement.options.selectedIndex; // c++ by default
+    //
+    switch (selectedIndex) {
+      case 1: // c++
+        solveSudoku  = this.algorithmService._SolveSudoku(this._sudokuGenerated  );
+        break;
+      case 2: // Typescript
+        solveSudoku  = this.algorithmService._SolveSudoku_NodeJS(this._sudokuGenerated  );
+        break;
+      default:
+        return;
+    }
     //
     const solveSudokuObserver = {
       next: (jsondata: string) => {
