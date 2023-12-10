@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router    } from '@angular/router';
+import { Component, VERSION } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +7,14 @@ import { Router    } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'CodeSandbox';
   //
-  constructor(private router : Router)
-  {
-       //
-       router.navigateByUrl("/Home");
+  title: string = '[WEB API DEMO - UNIT TESTING]';
+  appName: string = '[WEB API DEMO - UNIT TESTING]';
+  appVersion: string = '1.0.0.2';
+  runtimeVersion: string = VERSION.full;
+  //
+  constructor(private router: Router) {
+    //
+    router.navigateByUrl('/Home');
   }
 }

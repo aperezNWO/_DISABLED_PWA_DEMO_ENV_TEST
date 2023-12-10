@@ -6,12 +6,15 @@
 
 --[_] DEPLOY ON GITHUB CODESPACES
 
-Build your Angular application: Create a production build of your Angular application 
+Build your Angular application: 
+
+# Create a production build of your Angular application 
 using the Angular CLI:
 
-bash
-Copy code
-ng build --prod
+ng build --c=production
+
+# Replace <base href="/"> with
+https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/
 
 Deploy to GitHub Pages: You can create a GitHub Pages branch or use the gh-pages 
 package to automate the deployment process. 
