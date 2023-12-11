@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router    } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlgorithmService } from 'src/app/Services/algorithm.service';
 import { Observable } from 'rxjs';
 //
@@ -14,24 +14,27 @@ import { Observable } from 'rxjs';
 //
 export class UntTestingComponent {
   //
-  protected lblStatusNodeJs : string = "";
+  protected lblStatusNodeJs: string = '';
   //
-  protected BtnTestNodeJSCaption : string = "[TEST NODE.JS]";
+  protected BtnTestNodeJSCaption: string = '[TEST NODE.JS]';
   //
-  constructor(private algorithmService: AlgorithmService, private router : Router) {
+  constructor(
+    private algorithmService: AlgorithmService,
+    private router: Router,
+  ) {
     //
   }
   //
   RedirectHome(): void {
-      //
-      this.router.navigateByUrl("/Home");
+    //
+    this.router.navigateByUrl('/Home');
   }
   //
   TestNodeJs(): void {
     //
     console.log('[TEST NODE.JS] \n');
     //
-    this.BtnTestNodeJSCaption  = "...(retrieving data)...";
+    this.BtnTestNodeJSCaption = '...(retrieving data)...';
     //
     let testNodeJsObservable: Observable<string> =
       this.algorithmService._TestNodeJs();
@@ -39,12 +42,10 @@ export class UntTestingComponent {
     const testNodeJsObserver = {
       next: (jsondata: string) => {
         //
-        this.lblStatusNodeJs = JSON.parse(jsondata)['recordsets'][0][0]['NombreCompleto'];
+        this.lblStatusNodeJs =
+          JSON.parse(jsondata)['recordsets'][0][0]['nombreCompleto'];
         //
-        console.log(
-          '[TEST - NODEJS] - (return): ' +
-            this.lblStatusNodeJs,
-        );
+        console.log('[TEST - NODEJS] - (return): ' + this.lblStatusNodeJs);
         //
         this.BtnTestNodeJSCaption = '[TEST NODE.JS]';
       },
