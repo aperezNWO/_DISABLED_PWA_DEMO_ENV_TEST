@@ -23,7 +23,7 @@ export class SudokuComponent implements OnInit {
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
   */
   //
-  protected tituloListadoLenguajes: string = 'Seleccione Lenguaje';
+  protected tituloListadoLenguajes: string = 'Seleccione Backend';
   protected btnGenerateCaption: string = '[GENERAR]';
   protected btnSolveCaption: string = '[RESOLVER]';
   //
@@ -52,8 +52,8 @@ export class SudokuComponent implements OnInit {
       new _languageName(0, '(SELECCIONE OPCION..)', false),
     );
     //
-    this.__languajeList.push(new _languageName(1, 'C++'        , true));
-    this.__languajeList.push(new _languageName(2, '(Node.js)'  , false));
+    this.__languajeList.push(new _languageName(1, '(.NET Core/C++)'        , true));
+    this.__languajeList.push(new _languageName(2, '(Node.js)'              , false));
     //
     this._cppSourceDivHidden = false;
     //
