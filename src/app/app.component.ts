@@ -10,7 +10,7 @@ export class AppComponent {
   //
   title: string          = '[WEB API DEMO - UNIT TESTING]';
   appName: string        = '[WEB API DEMO - UNIT TESTING]';
-  appVersion: string     = '1.0.0.5';
+  appVersion: string     = '1.0.0.6';
   runtimeVersion: string = VERSION.full;
   //
   constructor(private router: Router) {
