@@ -1,4 +1,5 @@
 <h1>SUDOKU BOARD</h1>
+<!-- LISTADO LENGUAJE / INICIO  -->    
 <hr/>
     <div id="LangListDiv" align="left">
         <span id="tituloListadoLenguajes">{{this.tituloListadoLenguajes}}</span>
@@ -17,7 +18,9 @@
         <span id="cppSoureDiv" [hidden]="this._cppSourceDivHidden">
             <a href="javascript: void window.open('https://github.com/aperezNWO/CppBuilder01/blob/master/Project2/Sudoku.cpp')">[View Source]</a>
         </span>
-    </div>
+</div>
+<!-- LISTADO LENGUAJE / FIN -->    
+<!-- TABLERO / INICIO -->    
 <hr/>
 <div class="sudoku-board">
   <table>
@@ -33,7 +36,44 @@
     </tr>
   </tbody>
   </table>
-  </div>
+</div>
+<!-- TABLERO / FIN        -->      
+<hr />   
+<div class="fileUpload" align="left">
+    <a href="./assets/sudoku.txt" target="_blank">[Download Template]</a>
+    <hr>
+    <!-- FILE UPLOAD / INICIO -->
+    <div class="col-12">
+        <label class="btn btn-default p-0">
+        <input type="file" (change)="selectFile($event)"/>
+        </label>
+    </div>
+    <hr>       
+    <div class="col-12">
+        <button class="btn btn-success btn-sm"  [disabled]="!selectedFiles" (click)="upload()">
+            [Cargar Archivo]
+        </button>
+    </div>
+    <!-- FILE UPLOAD / FIN -->
+    <!--STATUS / INICIO -->
+    <hr>
+    <div *ngIf="currentFile" class="progress my-3">
+        <div
+            class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar"
+            attr.aria-valuenow="{{ progress }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [ngStyle]="{ width: progress + '%' }"
+        >
+        {{ progress }}%
+    </div>
+    </div>
+    <hr>
+    <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+    <!-- STATUS / FIN   -->
+</div>
+<!-- BUTTONS / INICIO -->
 <hr/>
 <div align="left">
     <input id="GetSudoku"   type="button" [value]="this.btnGenerateCaption"   (click)="this._GetSudoku(false)"
@@ -45,6 +85,7 @@
                 (this.btnGenerateCaption == '[...generando...]')   ||
                 (this.sudokuSolved       == true)">
 </div>
+<!--- BUTTONS / FIN -->
 <hr />
 <a routerLink="/Home">[Home]</a>      
 

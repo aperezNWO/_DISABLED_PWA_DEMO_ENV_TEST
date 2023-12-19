@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Modules/home/home.component';
@@ -17,8 +19,10 @@ const routes = [
 @NgModule({
   declarations: [AppComponent, HomeComponent, SudokuComponent],
   imports: [
+    NgbModule,
     HttpClientModule,
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule,
     RouterModule.forRoot(routes),
   ],

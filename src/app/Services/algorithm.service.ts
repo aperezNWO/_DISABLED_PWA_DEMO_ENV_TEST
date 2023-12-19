@@ -1,5 +1,10 @@
+import {
+  HttpClient,
+  HttpRequest,
+  HttpEvent,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,9 +27,11 @@ export class AlgorithmService {
     }),
     responseType: 'text' as 'json',
   };
-  ////////////////////////////////////////////////////////////////
-  // CAMPOS
-  ////////////////////////////////////////////////////////////////
+  public get _prefix(): string {
+    //
+    return 'https://webapiangulardemo.somee.com/';
+  }
+  readonly prefix: string = this._prefix;
   ////////////////////////////////////////////////////////////////
   // EVENT HANDLERS
   ////////////////////////////////////////////////////////////////
@@ -85,9 +92,28 @@ export class AlgorithmService {
     //
     return sudokuSolved;
   }
-
+  //-------------------------------------------------------------
+  // FILE UPLODAD METHODS
+  //-------------------------------------------------------------
+  upload(file: File): Observable<HttpEvent<any>> {
+    //
+    const formData: FormData = new FormData();
+    //
+    formData.append('file', file);
+    //
+    let url = `${this.prefix}demos/_ZipDemoGetFileName`;
+    //
+    console.log('[SUDOKU] - (UPLOADING FILE) url: ' + url);
+    //
+    const req = new HttpRequest('POST', url, formData, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+    //
+    return this.http.request<HttpEvent<any>>(req);
+  }
   ////////////////////////////////////////////////////////////////
-  // BACKEND TEST 
+  // BACKEND TEST
   ////////////////////////////////////////////////////////////////
   _TestNodeJs(): Observable<string> {
     //

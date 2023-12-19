@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { AlgorithmService } from 'src/app/Services/algorithm.service';
 import { Observable } from 'rxjs';
 import { _languageName } from '../../../Models/algorithm-models.model';
@@ -36,6 +37,14 @@ export class SudokuComponent implements OnInit {
   public sudokuSolved: boolean = false;
   //
   public _sudokuGenerated: string = '';
+  //-------------------------------------------------
+  // file upload
+  //-------------------------------------------------
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress: number = 0;
+  message: string = '';
+  downloadLink: string = '';
   //
   constructor(private algorithmService: AlgorithmService) {
     //
@@ -52,8 +61,8 @@ export class SudokuComponent implements OnInit {
       new _languageName(0, '(SELECCIONE OPCION..)', false),
     );
     //
-    this.__languajeList.push(new _languageName(1, '(.NET Core/C++)'        , true));
-    this.__languajeList.push(new _languageName(2, '(Node.js)'              , false));
+    this.__languajeList.push(new _languageName(1, '(.NET Core/C++)', true));
+    this.__languajeList.push(new _languageName(2, '(Node.js)', false));
     //
     this._cppSourceDivHidden = false;
     //
@@ -151,14 +160,17 @@ export class SudokuComponent implements OnInit {
     //
     let solveSudoku: Observable<string>;
     //
-    let selectedIndex: number = this._languajeList.nativeElement.options.selectedIndex; // c++ by default
+    let selectedIndex: number =
+      this._languajeList.nativeElement.options.selectedIndex; // c++ by default
     //
     switch (selectedIndex) {
       case 1: // c++
-        solveSudoku  = this.algorithmService._SolveSudoku(this._sudokuGenerated  );
+        solveSudoku = this.algorithmService._SolveSudoku(this._sudokuGenerated);
         break;
       case 2: // Typescript
-        solveSudoku  = this.algorithmService._SolveSudoku_NodeJS(this._sudokuGenerated  );
+        solveSudoku = this.algorithmService._SolveSudoku_NodeJS(
+          this._sudokuGenerated,
+        );
         break;
       default:
         return;
@@ -207,29 +219,58 @@ export class SudokuComponent implements OnInit {
     //
     solveSudoku.subscribe(solveSudokuObserver);
   }
+  //------------------------------------------------------
+  // FILE UPLOAD METHODS / EVEND HANDLERS
+  //------------------------------------------------------
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
+  //
+  upload(): void {
+    //
+    this.progress = 0;
+    //
+    this.message = '...cargando...';
+    //
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+      //
+      if (file) {
+        //
+        this.currentFile = file;
+        //
+        this.algorithmService.upload(this.currentFile).subscribe({
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              //
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            } else if (event instanceof HttpResponse) {
+              //
+              console.log('RESPONSE : ' + event.body);
+              //
+              this.message = event.body;
+            }
+          },
+          error: (err: any) => {
+            //
+            console.log(err);
+            //
+            this.progress = 0;
+            //
+            if (err.error && err.error.message) {
+              //
+              this.message = err.error.message;
+            } else {
+              //
+              this.message = 'Could not upload the file!';
+            }
+            //
+            this.currentFile = undefined;
+          },
+        });
+      }
+      //
+      this.selectedFiles = undefined;
+    }
+  }
 }
-
-/*
-  {5, 3, 0, 0, 7, 0, 0, 0, 0},
-  {6, 0, 0, 1, 9, 5, 0, 0, 0},
-  {0, 9, 8, 0, 0, 0, 0, 6, 0},
-  {8, 0, 0, 0, 6, 0, 0, 0, 3},
-  {4, 0, 0, 8, 0, 3, 0, 0, 1},
-  {7, 0, 0, 0, 2, 0, 0, 0, 6},
-  {0, 6, 0, 0, 0, 0, 2, 8, 0},
-  {0, 0, 0, 4, 1, 9, 0, 0, 5},
-  {0, 0, 0, 0, 8, 0, 0, 7, 9}
-
-Sudoku solved:
-
-  5 3 4 6 7 8 9 1 2 
-  6 7 2 1 9 5 3 4 8 
-  1 9 8 3 4 2 5 6 7 
-  8 5 9 7 6 1 4 2 3 
-  4 2 6 8 5 3 7 9 1 
-  7 1 3 9 2 4 8 5 6 
-  9 6 1 5 3 7 2 8 4 
-  2 8 7 4 1 9 6 3 5 
-  3 4 5 2 8 6 1 7 9
-
-*/
