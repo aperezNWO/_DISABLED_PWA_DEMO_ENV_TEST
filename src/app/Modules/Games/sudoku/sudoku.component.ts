@@ -248,12 +248,15 @@ export class SudokuComponent implements OnInit {
               //
               console.log('RESPONSE : ' + event.body);
               //
-              this.message   = event.body;
               let  jsondata  = event.body;
               //
               jsondata = jsondata.replaceAll('\"', '');
+              jsondata = jsondata.replace(/\\r/g, '');
+              jsondata = jsondata.replace(/\\n/g, '');
               //
               this._sudokuGenerated = jsondata;
+              //
+              this.message          = jsondata;
               //  
               jsondata = jsondata.replaceAll('[', '');
               jsondata = jsondata.replaceAll(']', '');
