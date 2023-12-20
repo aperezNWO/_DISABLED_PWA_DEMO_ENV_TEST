@@ -29,7 +29,8 @@ export class AlgorithmService {
   };
   public get _prefix(): string {
     //
-    return 'https://webapiangulardemo.somee.com/';
+    //return 'https://webapiangulardemo.somee.com/';
+    return 'http://localhost:83/'
   }
   readonly prefix: string = this._prefix;
   ////////////////////////////////////////////////////////////////
@@ -101,7 +102,7 @@ export class AlgorithmService {
     //
     formData.append('file', file);
     //
-    let url = `${this.prefix}demos/_ZipDemoGetFileName`;
+    let url = `${this.prefix}demos/Sudoku_Upload_File`;
     //
     console.log('[SUDOKU] - (UPLOADING FILE) url: ' + url);
     //

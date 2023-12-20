@@ -248,7 +248,32 @@ export class SudokuComponent implements OnInit {
               //
               console.log('RESPONSE : ' + event.body);
               //
-              this.message = event.body;
+              this.message   = event.body;
+              let  jsondata  = event.body;
+              //
+              jsondata = jsondata.replaceAll('\"', '');
+              //
+              this._sudokuGenerated = jsondata;
+              //  
+              jsondata = jsondata.replaceAll('[', '');
+              jsondata = jsondata.replaceAll(']', '');
+              jsondata = jsondata.replaceAll('},', '|');
+              jsondata = jsondata.replaceAll('{', '');
+              jsondata = jsondata.replaceAll('}', '');
+              let jsonDataArray: string[] = jsondata.split('|');
+              //
+              this.board = [];
+              //
+              for (let i = 0; i < 9; i++) {
+                const row: number[] = [];
+                console.log(jsonDataArray[i]);
+                const rowString: string[] = jsonDataArray[i].split(',');
+                for (let j = 0; j < 9; j++) {
+                  //row.push(i * 3 + j);
+                  row.push(parseInt(rowString[j]));
+                }
+                this.board.push(row);
+              }
             }
           },
           error: (err: any) => {
