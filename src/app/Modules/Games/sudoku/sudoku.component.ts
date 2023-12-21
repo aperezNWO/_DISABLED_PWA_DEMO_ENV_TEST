@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { AlgorithmService } from 'src/app/Services/algorithm.service';
-import { Observable } from 'rxjs';
-import { _languageName } from '../../../Models/algorithm-models.model';
+import { Observable      } from 'rxjs';
+import { ListItem       } from '../../../Models/algorithm-models.model';
 //
 @Component({
   selector: 'app-sudoku',
@@ -24,13 +24,15 @@ export class SudokuComponent implements OnInit {
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
   */
   //
-  protected tituloListadoLenguajes: string = 'Seleccione Backend';
-  protected btnGenerateCaption: string = '[GENERAR]';
-  protected btnSolveCaption: string = '[RESOLVER]';
+  protected tituloListadoLenguajes : string = 'Seleccione Backend';
+  protected btnGenerateCaption     : string = '[GENERAR]';
+  protected btnSolveCaption        : string = '[RESOLVER]';
   //
   @ViewChild('_languajeList') _languajeList: any;
   //
   public __languajeList: any;
+  //
+  public __generateSourceList : any;
   //
   public _cppSourceDivHidden: boolean = true;
   //
@@ -40,11 +42,11 @@ export class SudokuComponent implements OnInit {
   //-------------------------------------------------
   // file upload
   //-------------------------------------------------
-  selectedFiles?: FileList;
-  currentFile?: File;
-  progress: number = 0;
-  message: string = '';
-  downloadLink: string = '';
+  selectedFiles?   : FileList;
+  currentFile?     : File;
+  progress         : number = 0;
+  message          : string = '';
+  downloadLink     : string = '';
   //
   constructor(private algorithmService: AlgorithmService) {
     //
@@ -56,17 +58,17 @@ export class SudokuComponent implements OnInit {
     // LENGUAJES DE PROGRAMACION
     //-----------------------------------------------------------------------------
     this.__languajeList = new Array();
-    //
-    this.__languajeList.push(
-      new _languageName(0, '(SELECCIONE OPCION..)', false),
-    );
-    //
-    this.__languajeList.push(new _languageName(1, '(.NET Core/C++)', true));
-    this.__languajeList.push(new _languageName(2, '(Node.js)', false));
+    this.__languajeList.push(new ListItem(0, '(SELECCIONE OPCION..)', false));
+    this.__languajeList.push(new ListItem(1, '(.NET Core/C++)', true));
+    this.__languajeList.push(new ListItem(2, '(Node.js)'      , false));
     //
     this._cppSourceDivHidden = false;
     //
-    this._GetSudoku(true);
+    //this._GetSudoku(true);
+    this.__generateSourceList = new Array();
+    this.__generateSourceList.push(new ListItem(0, '(SELECCIONE OPCION..)', false));
+    this.__generateSourceList.push(new ListItem(1, '[Desde Archivo]'  , true));
+    this.__generateSourceList.push(new ListItem(2, '[Desde Backend]'  , false));
   }
   //
   public _cppSourceDivHiddenChaged(): void {
@@ -256,7 +258,7 @@ export class SudokuComponent implements OnInit {
               //
               this._sudokuGenerated = jsondata;
               //
-              this.message          = jsondata;
+              this.message          = "[Se cargo el archivo correctamente en  ]";
               //  
               jsondata = jsondata.replaceAll('[', '');
               jsondata = jsondata.replaceAll(']', '');
