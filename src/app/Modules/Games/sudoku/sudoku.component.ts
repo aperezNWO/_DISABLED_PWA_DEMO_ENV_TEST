@@ -159,15 +159,6 @@ export class SudokuComponent implements OnInit {
   //------------------------------------------------------
   // FILE UPLOAD METHODS / EVEND HANDLERS
   //------------------------------------------------------
-  clearFileInput():void{
-    //
-    console.log("[CLEARING FORM]");
-    //
-    if (this._yourForm) {
-      this._yourForm.resetForm();
-      //this._yourForm?.form.reset();
-    }
-  }
   //
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
@@ -361,8 +352,6 @@ export class SudokuComponent implements OnInit {
         this.selectedFiles = undefined;
         //
         this.currentFile   = undefined;
-        //
-        this.clearFileInput();
       },
     };
     //
