@@ -28,13 +28,17 @@ export class SudokuComponent implements OnInit {
   protected btnGenerateCaption     : string = '[GENERAR]';
   protected btnSolveCaption        : string = '[RESOLVER]';
   //
+  protected tituloGenerarDesde    : string = 'Generar Desde';
+  //
   @ViewChild('_languajeList') _languajeList: any;
+  @ViewChild('_SourceList')   _sourceList: any;
   //
   public __languajeList: any;
   //
   public __generateSourceList : any;
   //
   public _cppSourceDivHidden: boolean = true;
+  public _fileUploadDivHidden:boolean = true;
   //
   public sudokuSolved: boolean = false;
   //
@@ -64,14 +68,13 @@ export class SudokuComponent implements OnInit {
     //
     this._cppSourceDivHidden = false;
     //
-    //this._GetSudoku(true);
     this.__generateSourceList = new Array();
     this.__generateSourceList.push(new ListItem(0, '(SELECCIONE OPCION..)', false));
-    this.__generateSourceList.push(new ListItem(1, '[Desde Archivo]'  , true));
-    this.__generateSourceList.push(new ListItem(2, '[Desde Backend]'  , false));
+    this.__generateSourceList.push(new ListItem(1, '[Desde Archivo]'      , false));
+    this.__generateSourceList.push(new ListItem(2, '[Desde Backend]'      , true));
   }
   //
-  public _cppSourceDivHiddenChaged(): void {
+  public _cppSourceDivHiddenChanged(): void {
     //
     console.log('SUDOKU - [DIV CPP SOURCE CHANGED]');
     //
@@ -80,76 +83,196 @@ export class SudokuComponent implements OnInit {
     this._cppSourceDivHidden = _selectedIndex != 1; // item 1 = "c++"
   }
   //
-  public _GetSudoku(onLoad: boolean): void {
+  public _fileUploadDivHiddenChanged(): void {
     //
-    console.log('[SUDOKU - GENERATE]');
+    console.log('SUDOKU - [DIV FILEUPLOAD CHANGED]');
     //
-    let generatedSudoku: Observable<string>;
-    let selectedIndex: number = onLoad
-      ? 1
-      : this._languajeList.nativeElement.options.selectedIndex; // c++ by default
+    let _selectedIndex: number =
+      this._sourceList.nativeElement.options.selectedIndex;
+    this._fileUploadDivHidden = _selectedIndex != 1; // item 1 = "Desde Archivo"
+  }
+  //
+  public GenerateFromBackend():void {
+        //
+        console.log('[SUDOKU - GENERATE FROM BACKEND]');
+        //
+        let generatedSudoku: Observable<string>;
+        let selectedIndex  : number = this._languajeList.nativeElement.options.selectedIndex; // c++ by default
+        //
+        switch (selectedIndex) {
+          case 1: // c++
+            generatedSudoku = this.algorithmService._GetSudoku();
+            break;
+          case 2: // Typescript
+            generatedSudoku = this.algorithmService._GetSudoku_NodeJS();
+            break;
+          default:
+            return;
+        }
+        //
+        this.sudokuSolved = false;
+        //
+        this.btnGenerateCaption = '[...generando...]';
+        //
+        const generatedSudokuObserver = {
+          next: (jsondata: string) => {
+            //
+            console.log('[SUDOKU - GENERATE] - (return): ' + jsondata);
+            //
+            this._sudokuGenerated = jsondata;
+            //
+            jsondata = jsondata.replaceAll('[', '');
+            jsondata = jsondata.replaceAll(']', '');
+            jsondata = jsondata.replaceAll('},', '|');
+            jsondata = jsondata.replaceAll('{', '');
+            jsondata = jsondata.replaceAll('}', '');
+            let jsonDataArray: string[] = jsondata.split('|');
+            //
+            this.board = [];
+            //
+            for (let i = 0; i < 9; i++) {
+              const row: number[] = [];
+              console.log(jsonDataArray[i]);
+              const rowString: string[] = jsonDataArray[i].split(',');
+              for (let j = 0; j < 9; j++) {
+                row.push(parseInt(rowString[j]));
+              }
+              this.board.push(row);
+            }
+          },
+          error: (err: Error) => {
+            //
+            console.error(
+              '[SUDOKU - GENERATE] - (ERROR) : ' + JSON.stringify(err.message),
+            );
+            //
+            this.btnGenerateCaption = '[GENERAR]';
+          },
+          complete: () => {
+            //
+            console.log('[SUDOKU - GENERATE] -  (COMPLETE)');
+            //
+            this.btnGenerateCaption = '[GENERAR]';
+          },
+        };
+        //
+        generatedSudoku.subscribe(generatedSudokuObserver);
+  };
+  //------------------------------------------------------
+  // FILE UPLOAD METHODS / EVEND HANDLERS
+  //------------------------------------------------------
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
+  //
+  upload(): void {
     //
-    switch (selectedIndex) {
-      case 1: // c++
-        generatedSudoku = this.algorithmService._GetSudoku();
-        break;
-      case 2: // Typescript
-        generatedSudoku = this.algorithmService._GetSudoku_NodeJS();
-        break;
-      default:
-        return;
-    }
+    console.log('[SUDOKU - GENERATE  FROM FILE]');
+    //
+    this.progress = 0;
+    //
+    this.message = '...cargando...';
     //
     this.sudokuSolved = false;
     //
     this.btnGenerateCaption = '[...generando...]';
     //
-    const generatedSudokuObserver = {
-      next: (jsondata: string) => {
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+      //
+      if (file) {
         //
-        console.log('[SUDOKU - GENERATE] - (return): ' + jsondata);
+        this.currentFile = file;
         //
-        this._sudokuGenerated = jsondata;
-        //
-        jsondata = jsondata.replaceAll('[', '');
-        jsondata = jsondata.replaceAll(']', '');
-        jsondata = jsondata.replaceAll('},', '|');
-        jsondata = jsondata.replaceAll('{', '');
-        jsondata = jsondata.replaceAll('}', '');
-        let jsonDataArray: string[] = jsondata.split('|');
-        //
-        this.board = [];
-        //
-        for (let i = 0; i < 9; i++) {
-          const row: number[] = [];
-          console.log(jsonDataArray[i]);
-          const rowString: string[] = jsonDataArray[i].split(',');
-          for (let j = 0; j < 9; j++) {
-            //row.push(i * 3 + j);
-            row.push(parseInt(rowString[j]));
-          }
-          this.board.push(row);
-        }
-      },
-      error: (err: Error) => {
-        //
-        console.error(
-          '[SUDOKU - GENERATE] - (ERROR) : ' + JSON.stringify(err.message),
-        );
-        //
-        this.sudokuSolved = false;
-        //
-        this.btnGenerateCaption = '[GENERAR]';
-      },
-      complete: () => {
-        //
-        console.log('[SUDOKU - GENERATE] -  (COMPLETE)');
-        //
-        this.btnGenerateCaption = '[GENERAR]';
-      },
-    };
-    //
-    generatedSudoku.subscribe(generatedSudokuObserver);
+        this.algorithmService.upload(this.currentFile).subscribe({
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              //
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            } else if (event instanceof HttpResponse) {
+              //
+              console.log('RESPONSE : ' + event.body);
+              //
+              let  jsondata  = event.body;
+              //
+              jsondata = jsondata.replaceAll('\"', '');
+              jsondata = jsondata.replace(/\\r/g, '');
+              jsondata = jsondata.replace(/\\n/g, '');
+              //
+              this._sudokuGenerated = jsondata;
+              //
+              this.message          = "[Se cargo el archivo correctamente]";
+              //  
+              jsondata = jsondata.replaceAll('[', '');
+              jsondata = jsondata.replaceAll(']', '');
+              jsondata = jsondata.replaceAll('},', '|');
+              jsondata = jsondata.replaceAll('{', '');
+              jsondata = jsondata.replaceAll('}', '');
+              let jsonDataArray: string[] = jsondata.split('|');
+              //
+              this.board = [];
+              //
+              for (let i = 0; i < 9; i++) {
+                const row: number[] = [];
+                console.log(jsonDataArray[i]);
+                const rowString: string[] = jsonDataArray[i].split(',');
+                for (let j = 0; j < 9; j++) {
+                  row.push(parseInt(rowString[j]));
+                }
+                this.board.push(row);
+              }
+            }
+          },
+          error: (err: any) => {
+            //
+            console.error('[SUDOKU - GENERATE  FROM FILE] -  (ERROR)');
+            //
+            console.error(err);
+            //
+            this.progress = 0;
+            //
+            if (err.error && err.error.message) {
+              //
+              this.message = err.error.message;
+            } else {
+              //
+              this.message = '[Could not upload the file!]';
+            }
+            //
+            this.currentFile = undefined;
+            //
+            this.btnGenerateCaption = '[GENERAR]';
+          },
+          complete: () => {
+            //
+            console.log('[SUDOKU - GENERATE  FROM FILE] -  (COMPLETE)');
+            //
+            this.btnGenerateCaption = '[GENERAR]';
+          },
+        });
+      }
+      //
+      this.selectedFiles = undefined;
+    }
+  }
+  //
+  public _GetSudoku(): void {
+      //
+      console.log('[SUDOKU - GENERATE - MAIN MENU]');
+      //
+      let selectedIndex  : number = this._sourceList.nativeElement.options.selectedIndex; // "FROM ARCHIVE" by default
+      //
+      switch (selectedIndex) {
+        case 1: // FROM ARCHIVE
+          this.upload();
+          break;
+        case 2: // FROM BACKEND
+          this.GenerateFromBackend();
+          break;
+        default:
+          return;
+      }
+      
   }
   //
   public _SolveSudoku(): void {
@@ -199,7 +322,6 @@ export class SudokuComponent implements OnInit {
           console.log(jsonDataArray[i]);
           const rowString: string[] = jsonDataArray[i].split(',');
           for (let j = 0; j < 9; j++) {
-            //row.push(i * 3 + j);
             row.push(parseInt(rowString[j]));
           }
           this.board.push(row);
@@ -220,87 +342,5 @@ export class SudokuComponent implements OnInit {
     };
     //
     solveSudoku.subscribe(solveSudokuObserver);
-  }
-  //------------------------------------------------------
-  // FILE UPLOAD METHODS / EVEND HANDLERS
-  //------------------------------------------------------
-  selectFile(event: any): void {
-    this.selectedFiles = event.target.files;
-  }
-  //
-  upload(): void {
-    //
-    this.progress = 0;
-    //
-    this.message = '...cargando...';
-    //
-    if (this.selectedFiles) {
-      const file: File | null = this.selectedFiles.item(0);
-      //
-      if (file) {
-        //
-        this.currentFile = file;
-        //
-        this.algorithmService.upload(this.currentFile).subscribe({
-          next: (event: any) => {
-            if (event.type === HttpEventType.UploadProgress) {
-              //
-              this.progress = Math.round((100 * event.loaded) / event.total);
-            } else if (event instanceof HttpResponse) {
-              //
-              console.log('RESPONSE : ' + event.body);
-              //
-              let  jsondata  = event.body;
-              //
-              jsondata = jsondata.replaceAll('\"', '');
-              jsondata = jsondata.replace(/\\r/g, '');
-              jsondata = jsondata.replace(/\\n/g, '');
-              //
-              this._sudokuGenerated = jsondata;
-              //
-              this.message          = "[Se cargo el archivo correctamente en  ]";
-              //  
-              jsondata = jsondata.replaceAll('[', '');
-              jsondata = jsondata.replaceAll(']', '');
-              jsondata = jsondata.replaceAll('},', '|');
-              jsondata = jsondata.replaceAll('{', '');
-              jsondata = jsondata.replaceAll('}', '');
-              let jsonDataArray: string[] = jsondata.split('|');
-              //
-              this.board = [];
-              //
-              for (let i = 0; i < 9; i++) {
-                const row: number[] = [];
-                console.log(jsonDataArray[i]);
-                const rowString: string[] = jsonDataArray[i].split(',');
-                for (let j = 0; j < 9; j++) {
-                  //row.push(i * 3 + j);
-                  row.push(parseInt(rowString[j]));
-                }
-                this.board.push(row);
-              }
-            }
-          },
-          error: (err: any) => {
-            //
-            console.log(err);
-            //
-            this.progress = 0;
-            //
-            if (err.error && err.error.message) {
-              //
-              this.message = err.error.message;
-            } else {
-              //
-              this.message = 'Could not upload the file!';
-            }
-            //
-            this.currentFile = undefined;
-          },
-        });
-      }
-      //
-      this.selectedFiles = undefined;
-    }
   }
 }
