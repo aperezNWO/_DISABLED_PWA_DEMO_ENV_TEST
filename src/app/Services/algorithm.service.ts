@@ -96,7 +96,7 @@ export class AlgorithmService {
   //-------------------------------------------------------------
   // FILE UPLODAD METHODS
   //-------------------------------------------------------------
-  upload(file: File): Observable<HttpEvent<any>> {
+  uploadSudoku(file: File): Observable<HttpEvent<any>> {
     //
     const formData: FormData = new FormData();
     //

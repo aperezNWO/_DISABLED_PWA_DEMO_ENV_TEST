@@ -183,7 +183,7 @@ export class SudokuComponent implements OnInit {
         //
         this.currentFile = file;
         //
-        this.algorithmService.upload(this.currentFile).subscribe({
+        this.algorithmService.uploadSudoku(this.currentFile).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               //
