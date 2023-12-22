@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { AlgorithmService } from 'src/app/Services/algorithm.service';
-import { Observable      } from 'rxjs';
-import { ListItem       } from '../../../Models/algorithm-models.model';
+import { NgForm                       } from '@angular/forms';
+import { HttpEventType, HttpResponse  } from '@angular/common/http';
+import { AlgorithmService             } from 'src/app/Services/algorithm.service';
+import { Observable                   } from 'rxjs';
+import { ListItem                     } from '../../../Models/algorithm-models.model';
 //
 @Component({
   selector: 'app-sudoku',
@@ -12,17 +13,6 @@ import { ListItem       } from '../../../Models/algorithm-models.model';
 export class SudokuComponent implements OnInit {
   //
   board: number[][] = [];
-  /*    
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-  */
   //
   protected tituloListadoLenguajes : string = 'Seleccione Backend';
   protected btnGenerateCaption     : string = '[GENERAR]';
@@ -32,6 +22,8 @@ export class SudokuComponent implements OnInit {
   //
   @ViewChild('_languajeList') _languajeList: any;
   @ViewChild('_SourceList')   _sourceList: any;
+  @ViewChild('_fileUpload')   _fileUpload: any;
+  @ViewChild('_yourForm', { static: false }) _yourForm: NgForm | undefined;
   //
   public __languajeList: any;
   //
@@ -40,7 +32,7 @@ export class SudokuComponent implements OnInit {
   public _cppSourceDivHidden: boolean = true;
   public _fileUploadDivHidden:boolean = true;
   //
-  public sudokuSolved: boolean = false;
+  public sudokuSolved: boolean = true;
   //
   public _sudokuGenerated: string = '';
   //-------------------------------------------------
@@ -81,6 +73,8 @@ export class SudokuComponent implements OnInit {
     let _selectedIndex: number =
       this._languajeList.nativeElement.options.selectedIndex;
     this._cppSourceDivHidden = _selectedIndex != 1; // item 1 = "c++"
+    //
+    this.message = "";
   }
   //
   public _fileUploadDivHiddenChanged(): void {
@@ -90,6 +84,8 @@ export class SudokuComponent implements OnInit {
     let _selectedIndex: number =
       this._sourceList.nativeElement.options.selectedIndex;
     this._fileUploadDivHidden = _selectedIndex != 1; // item 1 = "Desde Archivo"
+    //
+    this.message = "";
   }
   //
   public GenerateFromBackend():void {
@@ -153,6 +149,8 @@ export class SudokuComponent implements OnInit {
             console.log('[SUDOKU - GENERATE] -  (COMPLETE)');
             //
             this.btnGenerateCaption = '[GENERAR]';
+            //
+            this.message            =  "[Se generó correctamente]";
           },
         };
         //
@@ -161,6 +159,16 @@ export class SudokuComponent implements OnInit {
   //------------------------------------------------------
   // FILE UPLOAD METHODS / EVEND HANDLERS
   //------------------------------------------------------
+  clearFileInput():void{
+    //
+    console.log("[CLEARING FORM]");
+    //
+    if (this._yourForm) {
+      this._yourForm.resetForm();
+      //this._yourForm?.form.reset();
+    }
+  }
+  //
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
   }
@@ -169,18 +177,18 @@ export class SudokuComponent implements OnInit {
     //
     console.log('[SUDOKU - GENERATE  FROM FILE]');
     //
-    this.progress = 0;
-    //
-    this.message = '...cargando...';
-    //
-    this.sudokuSolved = false;
-    //
-    this.btnGenerateCaption = '[...generando...]';
-    //
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
       //
       if (file) {
+        //
+        this.progress = 0;
+        //
+        this.message = '...cargando...';
+        //
+        this.sudokuSolved = false;
+        //
+        this.btnGenerateCaption = '[...generando...]';       
         //
         this.currentFile = file;
         //
@@ -200,8 +208,6 @@ export class SudokuComponent implements OnInit {
               jsondata = jsondata.replace(/\\n/g, '');
               //
               this._sudokuGenerated = jsondata;
-              //
-              this.message          = "[Se cargo el archivo correctamente]";
               //  
               jsondata = jsondata.replaceAll('[', '');
               jsondata = jsondata.replaceAll(']', '');
@@ -248,11 +254,20 @@ export class SudokuComponent implements OnInit {
             console.log('[SUDOKU - GENERATE  FROM FILE] -  (COMPLETE)');
             //
             this.btnGenerateCaption = '[GENERAR]';
+            //
+            this.message          = "[Se generó correctamente]";
+            //
+            this.selectedFiles = undefined;
+            //
+            this.currentFile   = undefined;
           },
         });
       }
-      //
-      this.selectedFiles = undefined;
+    }
+    else 
+    {
+        //
+        this.message          = "[Favor seleccione archivo...]";
     }
   }
   //
@@ -332,12 +347,22 @@ export class SudokuComponent implements OnInit {
         console.error(
           '[SUDOKU - SOLVE] - (ERROR) : ' + JSON.stringify(err.message),
         );
+        //
+        this.message = "[Ha ocurrido un error]";
       },
       complete: () => {
         //
         console.log('[SUDOKU - SOLVE] -  (COMPLETE)');
         //
         this.btnSolveCaption = '[RESOLVER]';
+        //
+        this.message = "[Se resolvió correctamente]";
+        //
+        this.selectedFiles = undefined;
+        //
+        this.currentFile   = undefined;
+        //
+        this.clearFileInput();
       },
     };
     //

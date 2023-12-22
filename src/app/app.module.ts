@@ -1,15 +1,16 @@
-import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgModule                      } from '@angular/core';
+import { NgbModule                     } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule                  } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './Modules/home/home.component';
-import { SudokuComponent } from './Modules/Games/sudoku/sudoku.component';
-import { UntTestingComponent } from './Modules/UnitTesting/unt-testing/unt-testing.component';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule                   } from '@angular/forms';
+import { BrowserModule                 } from '@angular/platform-browser';
+import { BrowserAnimationsModule       } from '@angular/platform-browser/animations';
+import { RouterModule                  } from '@angular/router';
+import { HttpClient                    } from '@angular/common/http';
+import { HttpClientModule              } from '@angular/common/http';
+import { AppComponent                  } from './app.component';
+import { HomeComponent                 } from './Modules/home/home.component';
+import { SudokuComponent               } from './Modules/Games/sudoku/sudoku.component';
+import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing/unt-testing.component';
 //
 const routes = [
   { path: 'Home', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes = [
   imports: [
     NgbModule,
     CommonModule,
+    FormsModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
