@@ -29,8 +29,8 @@ export class AlgorithmService {
   };
   public get _prefix(): string {
     //
-    //return 'https://webapiangulardemo.somee.com/';
-    return 'http://localhost:83/'
+    return 'https://webapiangulardemo.somee.com/';
+    //return 'http://localhost:83/'
   }
   readonly prefix: string = this._prefix;
   ////////////////////////////////////////////////////////////////
