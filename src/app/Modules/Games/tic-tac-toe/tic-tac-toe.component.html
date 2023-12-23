@@ -1,24 +1,3 @@
 <app-board></app-board>
-<!--LISTADO INICIO -->
-<hr>
-<div id="SourceListDiv" align="left">
-    <span id="tituloSource">{{this.tituloSource}}</span>
-    <label for="SourceList"></label>
-    &nbsp;&nbsp;
-    <select id="SourceList"
-            name="SourceList"
-            #_SourceList
-            (change)="this._tituloSourceChanged()">
-            <option *ngFor="let _SourceName of __SourceList" 
-                    [value]   ="_SourceName._index"
-                    [selected]="_SourceName._selected">{{_SourceName._value}}
-            </option>
-    </select>
-</div>
-<!--LISTADO FIN    -->
-<!--BOTONES INICIO -->
-<hr>
-<input type="button" value="[NUEVO]">|<input type="button" value="[INICIAR]">
-<!--BOTONES FIN    -->
 <hr>
 <a href="/Home">[Home]</a>     
