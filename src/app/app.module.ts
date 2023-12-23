@@ -11,28 +11,31 @@ import { HttpClientModule              } from '@angular/common/http';
 import { AppComponent                  } from './app.component';
 import { HomeComponent                 } from './Modules/home/home.component';
 import { SudokuComponent               } from './Modules/Games/sudoku/sudoku.component';
+import { TicTacToeComponent            } from './Modules/Games/tic-tac-toe/tic-tac-toe.component';
 import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing/unt-testing.component';
 //
 const routes = [
-  { path: 'Home', component: HomeComponent },
-  { path: 'Sudoku', component: SudokuComponent },
+  { path: 'Home'       , component: HomeComponent       },
+  { path: 'Sudoku'     , component: SudokuComponent     },
+  { path: 'TicTacToe'  , component: TicTacToeComponent  },
   { path: 'UnitTesting', component: UntTestingComponent },
-  { path: '**', component: AppComponent },
+  { path: '**'         , component: AppComponent        },
 ];
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SudokuComponent],
-  imports: [
-    NgbModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    RouterModule,
-    RouterModule.forRoot(routes),
-  ],
-  providers: [HttpClient],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent, HomeComponent, SudokuComponent],
+    providers: [HttpClient],
+    bootstrap: [AppComponent],
+    imports: [
+        NgbModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        RouterModule,
+        RouterModule.forRoot(routes),
+        TicTacToeComponent,
+    ]
 })
 export class AppModule {}

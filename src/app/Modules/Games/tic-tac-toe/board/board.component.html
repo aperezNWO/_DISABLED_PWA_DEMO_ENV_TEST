@@ -1,0 +1,12 @@
+<h1>[TIC-TAC-TOE BOARD]</h1>
+<hr>
+<div class="board" align="center">
+    <div class="board-row" *ngFor="let i of [0, 1, 2]">
+      <app-square
+        *ngFor="let j of [0, 1, 2]"
+        [value]="squares[i * 3 + j]"
+        (clickEvent)="makeMove(i * 3 + j)"
+      ></app-square>
+    </div>
+</div>
+

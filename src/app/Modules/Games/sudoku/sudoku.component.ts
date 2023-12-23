@@ -47,7 +47,7 @@ export class SudokuComponent implements OnInit {
     _fileUpload          : ["", Validators.required],
   });
   //
-  constructor(private algorithmService: AlgorithmService,private formBuilder: FormBuilder,) {
+  constructor(private algorithmService: AlgorithmService,private formBuilder: FormBuilder) {
     //
     console.log('[SUDOKU - INGRESO]');
   }
