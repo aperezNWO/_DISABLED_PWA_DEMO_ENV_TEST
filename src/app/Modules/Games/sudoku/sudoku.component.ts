@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm                       } from '@angular/forms';
+import { FormBuilder, Validators      } from '@angular/forms';
 import { HttpEventType, HttpResponse  } from '@angular/common/http';
 import { AlgorithmService             } from 'src/app/Services/algorithm.service';
 import { Observable                   } from 'rxjs';
@@ -23,8 +23,7 @@ export class SudokuComponent implements OnInit {
   @ViewChild('_languajeList') _languajeList: any;
   @ViewChild('_SourceList')   _sourceList: any;
   @ViewChild('_fileUpload')   _fileUpload: any;
-  @ViewChild('_yourForm', { static: false }) _yourForm: NgForm | undefined;
-  //
+    //
   public __languajeList: any;
   //
   public __generateSourceList : any;
@@ -44,7 +43,11 @@ export class SudokuComponent implements OnInit {
   message          : string = '';
   downloadLink     : string = '';
   //
-  constructor(private algorithmService: AlgorithmService) {
+  rf_searchForm   = this.formBuilder.group({
+    _fileUpload          : ["", Validators.required],
+  });
+  //
+  constructor(private algorithmService: AlgorithmService,private formBuilder: FormBuilder,) {
     //
     console.log('[SUDOKU - INGRESO]');
   }
@@ -352,6 +355,8 @@ export class SudokuComponent implements OnInit {
         this.selectedFiles = undefined;
         //
         this.currentFile   = undefined;
+        //
+        this.rf_searchForm.reset();
       },
     };
     //

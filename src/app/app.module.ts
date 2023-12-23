@@ -2,6 +2,7 @@ import { NgModule                      } from '@angular/core';
 import { NgbModule                     } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule                  } from '@angular/common';
 import { FormsModule                   } from '@angular/forms';
+import { ReactiveFormsModule           } from '@angular/forms';
 import { BrowserModule                 } from '@angular/platform-browser';
 import { BrowserAnimationsModule       } from '@angular/platform-browser/animations';
 import { RouterModule                  } from '@angular/router';
@@ -24,6 +25,7 @@ const routes = [
     NgbModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
