@@ -35,7 +35,6 @@ const routes = [
         BrowserAnimationsModule,
         RouterModule,
         RouterModule.forRoot(routes),
-        TicTacToeComponent,
     ]
 })
 export class AppModule {}
