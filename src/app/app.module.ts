@@ -22,7 +22,7 @@ const routes = [
   { path: '**'         , component: AppComponent        },
 ];
 @NgModule({
-    declarations: [AppComponent, HomeComponent, SudokuComponent],
+    declarations: [AppComponent, HomeComponent, SudokuComponent,  ],
     providers: [HttpClient],
     bootstrap: [AppComponent],
     imports: [
@@ -33,6 +33,8 @@ const routes = [
         HttpClientModule,
         BrowserModule,
         BrowserAnimationsModule,
+        TicTacToeComponent,
+        UntTestingComponent,
         RouterModule,
         RouterModule.forRoot(routes),
     ]
