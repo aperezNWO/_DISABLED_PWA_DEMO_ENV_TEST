@@ -28,5 +28,12 @@
 <!--LISTADO FIN    -->
 <!--BOTONES INICIO -->
 <hr>
-<input type="button" value="[NUEVO]" (click)="this.newGame();">|<input type="button" value="[INICIAR]" (click)="this.startGame()">
+<input type="button" value="[NUEVO]" (click)="this.newGame();">
 <!--BOTONES FIN    -->
+<hr>
+<!--STATUS / INICIO -->
+<div align="left">
+  <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+</div>
+<!-- STATUS / FIN   -->
+

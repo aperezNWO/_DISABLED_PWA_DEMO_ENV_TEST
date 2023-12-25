@@ -1,8 +1,8 @@
-//import express from "express";
+//[x]
 const prompt = require("prompt-sync")();
-//import prompt from "prompt-sync";
-
+//[x]
 class TicTacToe {
+  //[x]
   showBoard(board) {
     console.log(`\t\t\t ${board[0][0]} | ${board[0][1]} | ${board[0][2]} `);
     console.log(`\t\t\t-----------`);
@@ -10,7 +10,7 @@ class TicTacToe {
     console.log(`\t\t\t-----------`);
     console.log(`\t\t\t ${board[2][0]} | ${board[2][1]} | ${board[2][2]} \n`);
   }
-
+  //[x]
   showInstructions() {
     console.log("\nChoose a cell numbered from 1 to 9 as below and play\n\n");
     console.log("\t\t\t 1 | 2 | 3 ");
@@ -19,18 +19,18 @@ class TicTacToe {
     console.log("\t\t\t-----------");
     console.log("\t\t\t 7 | 8 | 9 \n\n");
   }
-
+  // [x]
   initialise(board) {
     for (let i = 0; i < SIDE; i++) {
       for (let j = 0; j < SIDE; j++) board[i][j] = " ";
     }
   }
-
+  // [x]
   declareWinner(whoseTurn) {
     if (whoseTurn == COMPUTER) console.log("COMPUTER has won\n");
     else console.log("HUMAN has won\n");
   }
-
+  // [x]
   rowCrossed(board) {
     for (let i = 0; i < SIDE; i++) {
       if (
@@ -42,7 +42,7 @@ class TicTacToe {
     }
     return false;
   }
-
+  // [x]
   columnCrossed(board) {
     for (let i = 0; i < SIDE; i++) {
       if (
@@ -54,7 +54,7 @@ class TicTacToe {
     }
     return false;
   }
-
+  // [x]
   diagonalCrossed(board) {
     if (
       board[0][0] == board[1][1] &&
@@ -70,7 +70,7 @@ class TicTacToe {
       return true;
     return false;
   }
-
+  // [x]
   gameOver(board) {
     return (
       this.rowCrossed(board) ||
@@ -78,7 +78,7 @@ class TicTacToe {
       this.diagonalCrossed(board)
     );
   }
-
+  // [x]
   minimax(board, depth, isAI) {
     let score = 0;
     let bestScore = 0;
@@ -123,7 +123,7 @@ class TicTacToe {
       }
     }
   }
-
+  // [x]
   bestMove(board, moveIndex) {
     let x = -1,
       y = -1;
@@ -145,7 +145,7 @@ class TicTacToe {
     }
     return x * 3 + y;
   }
-
+  // [x] 
   playTicTacToe(whoseTurn) {
     let board = new Array(SIDE).fill().map(() => new Array(SIDE).fill(" "));
     let moveIndex = 0,
@@ -166,11 +166,13 @@ class TicTacToe {
         moveIndex++;
         whoseTurn = HUMAN;
       } else if (whoseTurn == HUMAN) {
+        //
         console.log("You can insert in the following positions : ");
+        //
         for (let i = 0; i < SIDE; i++)
           for (let j = 0; j < SIDE; j++)
             if (board[i][j] == " ") console.log(`${i * 3 + j + 1} `);
-        //console.log();
+        // 
         n = parseInt(prompt("\nEnter the position = "));
         n--;
         x = Math.floor(n / SIDE);
@@ -199,7 +201,7 @@ class TicTacToe {
       this.declareWinner(whoseTurn);
     }
   }
-
+  // [x]
   Run() {
     console.log(
       "\n-------------------------------------------------------------------\n\n",
@@ -215,11 +217,11 @@ class TicTacToe {
     else console.log("Invalid choice\n");
   }
 }
-
+// [x]
 function TicTacToeTest() {
   let ticTacToe = new TicTacToe();
   //ticTacToe.Run();
 }
-
+// [x]
 // Export the function using module.exports
 module.exports = TicTacToeTest;
