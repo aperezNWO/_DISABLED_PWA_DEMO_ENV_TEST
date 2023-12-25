@@ -13,6 +13,7 @@ import { HomeComponent                 } from './Modules/home/home.component';
 import { SudokuComponent               } from './Modules/Games/sudoku/sudoku.component';
 import { TicTacToeComponent            } from './Modules/Games/tic-tac-toe/tic-tac-toe.component';
 import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing/unt-testing.component';
+import { BoardComponent } from "./Modules/Games/tic-tac-toe/board/board.component";
 //
 const routes = [
   { path: 'Home'       , component: HomeComponent       },
@@ -22,7 +23,7 @@ const routes = [
   { path: '**'         , component: AppComponent        },
 ];
 @NgModule({
-    declarations: [AppComponent, HomeComponent, SudokuComponent,  ],
+    declarations: [AppComponent, HomeComponent, SudokuComponent, UntTestingComponent, TicTacToeComponent,],
     providers: [HttpClient],
     bootstrap: [AppComponent],
     imports: [
@@ -33,10 +34,9 @@ const routes = [
         HttpClientModule,
         BrowserModule,
         BrowserAnimationsModule,
-        TicTacToeComponent,
-        UntTestingComponent,
         RouterModule,
         RouterModule.forRoot(routes),
+        BoardComponent
     ]
 })
 export class AppModule {}

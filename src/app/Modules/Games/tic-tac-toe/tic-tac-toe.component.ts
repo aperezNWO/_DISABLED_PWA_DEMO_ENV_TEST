@@ -6,8 +6,8 @@ import { BoardComponent    } from './board/board.component';
     selector: 'app-tic-tac-toe',
     templateUrl: './tic-tac-toe.component.html',
     styleUrl: './tic-tac-toe.component.css',
-    standalone:true,
-    imports: [CommonModule,BoardComponent]
+    //standalone:true,
+    //imports: [CommonModule,BoardComponent]
 })
 //
 export class TicTacToeComponent implements OnInit {
