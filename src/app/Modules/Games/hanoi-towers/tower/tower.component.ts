@@ -9,6 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './tower.component.css'
 })
 export class TowerComponent {
+  //
   @Input() tower: any;
-
 }

@@ -9,3 +9,12 @@ export class ListItem
         //
     }
 }
+//
+export class DiskInfo
+{
+    //
+    constructor(public value : number, public graph : string)
+    {
+        //
+    }
+}
