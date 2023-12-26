@@ -8,10 +8,10 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   //
-  title: string          = '[WEB API DEMO - UNIT TESTING]';
-  appName: string        = '[WEB API DEMO - UNIT TESTING]';
-  appVersion: string     = '1.0.0.17';
-  runtimeVersion: string = VERSION.full;
+  title          : string = '[WEB API DEMO - UNIT TESTING]';
+  appName        : string = '[WEB API DEMO - UNIT TESTING]';
+  appVersion     : string = '1.0.0.18';
+  runtimeVersion : string = VERSION.full;
   //
   constructor(private router: Router) {
     //

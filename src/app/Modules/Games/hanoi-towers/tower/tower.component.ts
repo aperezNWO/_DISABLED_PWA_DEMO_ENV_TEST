@@ -11,4 +11,8 @@ import { CommonModule } from '@angular/common';
 export class TowerComponent {
   //
   @Input() tower: any;
+  //  
+  toArray(map: Map<any, any>): any[] {
+    return Array.from(map.entries());
+  }
 }

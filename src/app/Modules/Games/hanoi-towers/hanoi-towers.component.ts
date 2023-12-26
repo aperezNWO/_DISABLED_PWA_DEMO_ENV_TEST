@@ -1,5 +1,5 @@
-import { Component          } from '@angular/core';
-import { DiskInfo           } from 'src/app/Models/algorithm-models.model';
+import { Component             } from '@angular/core';
+import { DiskInfo, HanoiStep   } from 'src/app/Models/algorithm-models.model';
 //
 @Component({
     selector: 'app-hanoi-towers',
@@ -9,16 +9,17 @@ import { DiskInfo           } from 'src/app/Models/algorithm-models.model';
 //
 export class HanoiTowersComponent {
   //
-  public    towerA              : DiskInfo[] = [];
-  public    towerB              : DiskInfo[] = [];
-  public    towerC              : DiskInfo[] = [];
-  public    message             : string     = "";
-  protected steps               : string[]   = [];
-  protected _steps              : string[]   = [];
+  public    towerA              : Map<number,( DiskInfo | undefined)> = new Map<number,( DiskInfo | undefined)>();
+  public    towerB              : Map<number,( DiskInfo | undefined)> = new Map<number,( DiskInfo | undefined)>();
+  public    towerC              : Map<number,( DiskInfo | undefined)> = new Map<number,( DiskInfo | undefined)>();
+  protected steps               : string[]       = [];
+  protected _steps              : HanoiStep[]    = [];
   protected _stepsIndex         : number     = 0;
   protected _startGame          : boolean    = true;
   private   delayInMilliseconds : number     = 1500;
   protected _stepsAmt           : number     = 0;
+  protected N                   : number     = 4;
+
   //
   constructor(){
       //
@@ -27,24 +28,80 @@ export class HanoiTowersComponent {
   printSteps()
   {
     // END RECURSION
-    if (this._stepsIndex > this._stepsAmt + 1)
-        return;
+    if (this._stepsIndex > this._stepsAmt + 2)
+    {
+      return;
+    }
     //
-    this.steps.push(this._steps[this._stepsIndex]);
+    if (this._stepsIndex == 0)
+      this.steps.push("[BEGIN STEPS]");
+    //
+    if (this._steps[this._stepsIndex])
+    {
+      let hanoiStep   : HanoiStep = this._steps[this._stepsIndex];
+      let n           : number    = hanoiStep.n;
+      let from        : string    = hanoiStep.from;
+      let to          : string    = hanoiStep.to;
+      //
+      let message : string = `Step ${(this._stepsIndex + 1)} of ${this._stepsAmt}. Move disk ${n} from Tower ${from} to Tower ${to}`;
+      // 
+      this.steps.push(message);
+      // 
+      this.makeMove(hanoiStep);
+    }
+    //    
     this._stepsIndex++;
+    //
+    if ((this._stepsIndex) == this._stepsAmt)
+    {
+      this.steps.push("[END STEPS]");
+    }
     //
     setTimeout(() => {
       this.printSteps();
     }, this.delayInMilliseconds); // Delay each move by 1 second        
   }
   //
+  makeMove(hanoiStep: HanoiStep) {
+    let _n           : number = hanoiStep.n;
+    let _from        : string = hanoiStep.from;
+    let _to          : string = hanoiStep.to;
+    //    
+    let diskInfo    : DiskInfo | undefined = undefined;
+    // 
+    switch (_from) {
+        case 'A':
+          diskInfo = this.towerA.get(_n);
+          this.towerA.set(_n, new DiskInfo(_n,"-"));
+          break;
+        case 'B':
+          diskInfo = this.towerB.get(_n);
+          this.towerB.set(_n, new DiskInfo(_n,"-"));
+          break;
+        case 'C':
+          diskInfo = this.towerC.get(_n);
+          this.towerC.set(_n, new DiskInfo(_n,"-"));
+          break;
+    }
+    //
+    switch (_to) {
+      case 'A':
+        this.towerA.set(_n,diskInfo);
+        break;
+      case 'B':
+        this.towerB.set(_n,diskInfo);
+        break;
+      case 'C':
+        this.towerC.set(_n,diskInfo);
+        break;
+    };
+  }
+  //
   saveStep(n: number, from: string, to: string) {
     // Implement logic to move a single disk from 'from' tower to 'to' tower
-    let message : string = `Move disk ${n} from Tower ${from} to Tower ${to}`;
+    let hanoiStep : HanoiStep = new HanoiStep(n,from,to);
     //
-    console.log(message);
-    //
-    this._steps.push(message);
+    this._steps.push(hanoiStep);
     //
     this._stepsAmt++;
   }
@@ -63,9 +120,22 @@ export class HanoiTowersComponent {
     //
     console.log("[HANOI TOWERS] - [NEW GAME]")
     //
-    this.towerA    = [new DiskInfo(1,"*") ,new DiskInfo(2,"**"),  new DiskInfo(3,"***"), new DiskInfo(4,"****")];
-    this.towerB    = [new DiskInfo(0,"-") ,new DiskInfo(0,"-") ,  new DiskInfo(0,"-")  , new DiskInfo(0,"-")];
-    this.towerC    = [new DiskInfo(0,"-") ,new DiskInfo(0,"-") ,  new DiskInfo(0,"-")  , new DiskInfo(0,"-")];
+    this.towerA      =  new Map<number,( DiskInfo | undefined)>();
+    let  graph      : string = "";
+    for (let i= 1; i <= this.N; i++) {
+      graph = graph + "*";
+      this.towerA.set(i,new DiskInfo(i,graph));
+    }  
+    //
+    this.towerB    =  new Map<number,( DiskInfo | undefined)>();
+    for (let i= 1; i <= this.N; i++) {
+      this.towerB.set(i,new DiskInfo(i,"-"));
+    }  
+    //
+    this.towerC    =  new Map<number,( DiskInfo | undefined)>();
+    for (let i= 1; i <= this.N; i++) {
+      this.towerC.set(i,new DiskInfo(i,"-"));
+    }  
     //
     this.steps        = [];
     this._steps       = [];
@@ -80,13 +150,8 @@ export class HanoiTowersComponent {
     console.log("[HANOI TOWERS] - [START GAME]")
     //
     this._startGame = true;
-    //
-    let N : number = 4;
 		// A, B and C are names of rods
-    //
-    this._steps.push("[BEGIN STEPS]");
-    this.towerOfHanoi(N, 'A', 'C', 'B');
-    this._steps.push("[END STEPS]");
+    this.towerOfHanoi(this.N, 'A', 'C', 'B');
     //
     this.printSteps();
   }

@@ -18,3 +18,10 @@ export class DiskInfo
         //
     }
 }
+export class HanoiStep
+{
+    constructor(public n: number, public from: string, public to: string)
+    {
+        
+    }
+}
