@@ -13,17 +13,20 @@ import { HomeComponent                 } from './Modules/home/home.component';
 import { SudokuComponent               } from './Modules/Games/sudoku/sudoku.component';
 import { TicTacToeComponent            } from './Modules/Games/tic-tac-toe/tic-tac-toe.component';
 import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing/unt-testing.component';
-import { BoardComponent } from "./Modules/Games/tic-tac-toe/board/board.component";
+import { BoardComponent                } from "./Modules/Games/tic-tac-toe/board/board.component";
+import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/hanoi-towers.component';
+import { TowerComponent } from "./Modules/Games/hanoi-towers/tower/tower.component";
 //
 const routes = [
-  { path: 'Home'       , component: HomeComponent       },
-  { path: 'Sudoku'     , component: SudokuComponent     },
-  { path: 'TicTacToe'  , component: TicTacToeComponent  },
-  { path: 'UnitTesting', component: UntTestingComponent },
-  { path: '**'         , component: AppComponent        },
+  { path: 'Home'       , component: HomeComponent        },
+  { path: 'Sudoku'     , component: SudokuComponent      },
+  { path: 'TicTacToe'  , component: TicTacToeComponent   },
+  { path: 'Hanoi'      , component: HanoiTowersComponent },
+  { path: 'UnitTesting', component: UntTestingComponent  },
+  { path: '**'         , component: AppComponent         },
 ];
 @NgModule({
-    declarations: [AppComponent, HomeComponent, SudokuComponent, UntTestingComponent, TicTacToeComponent,],
+    declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent,],
     providers: [HttpClient],
     bootstrap: [AppComponent],
     imports: [
@@ -36,7 +39,8 @@ const routes = [
         BrowserAnimationsModule,
         RouterModule,
         RouterModule.forRoot(routes),
-        BoardComponent
+        BoardComponent,
+        TowerComponent
     ]
 })
 export class AppModule {}
