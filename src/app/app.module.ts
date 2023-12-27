@@ -14,8 +14,8 @@ import { SudokuComponent               } from './Modules/Games/sudoku/sudoku.com
 import { TicTacToeComponent            } from './Modules/Games/tic-tac-toe/tic-tac-toe.component';
 import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing/unt-testing.component';
 import { BoardComponent                } from "./Modules/Games/tic-tac-toe/board/board.component";
-import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/hanoi-towers.component';
-import { TowerComponent } from "./Modules/Games/hanoi-towers/tower/tower.component";
+import { TowerComponent                } from "./Modules/Games/hanoi-towers/tower/tower.component";
+import { HanoiTowersComponent } from './Modules/Games/hanoi-towers/game-hanoi.component';
 //
 const routes = [
   { path: 'Home'       , component: HomeComponent        },
