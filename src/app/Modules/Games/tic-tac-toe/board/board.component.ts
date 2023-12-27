@@ -42,8 +42,8 @@ export class BoardComponent implements OnInit, AfterViewInit {
     //
     this.__SourceList = new Array();
     this.__SourceList.push(new ListItem(0, '(SELECCIONE OPCION..)', false));
-    this.__SourceList.push(new ListItem(1, '[INICIA JUGADOR]'     , false));
-    this.__SourceList.push(new ListItem(2, '[INICIA MAQUINA]'     , true));
+    this.__SourceList.push(new ListItem(1, '[INICIA JUGADOR]'     , true));
+    this.__SourceList.push(new ListItem(2, '[INICIA MAQUINA]'     , false));
     //
     this.initialise();
   }
