@@ -3,7 +3,7 @@ import { NgbModule                     } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule                  } from '@angular/common';
 import { FormsModule                   } from '@angular/forms';
 import { ReactiveFormsModule           } from '@angular/forms';
-import { BrowserModule                 } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration                 } from '@angular/platform-browser';
 import { BrowserAnimationsModule       } from '@angular/platform-browser/animations';
 import { RouterModule                  } from '@angular/router';
 import { HttpClient                    } from '@angular/common/http';
@@ -15,7 +15,7 @@ import { TicTacToeComponent            } from './Modules/Games/tic-tac-toe/tic-t
 import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing/unt-testing.component';
 import { BoardComponent                } from "./Modules/Games/tic-tac-toe/board/board.component";
 import { TowerComponent                } from "./Modules/Games/hanoi-towers/tower/tower.component";
-import { HanoiTowersComponent } from './Modules/Games/hanoi-towers/game-hanoi.component';
+import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/game-hanoi.component';
 //
 const routes = [
   { path: 'Home'       , component: HomeComponent        },
@@ -27,7 +27,7 @@ const routes = [
 ];
 @NgModule({
     declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent,],
-    providers: [HttpClient],
+    providers: [HttpClient, provideClientHydration()],
     bootstrap: [AppComponent],
     imports: [
         NgbModule,

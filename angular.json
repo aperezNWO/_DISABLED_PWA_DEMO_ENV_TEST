@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/sandbox",
+            "outputPath": "dist/sandbox/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -91,6 +91,44 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/sandbox/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "app-shell": {
+          "builder": "@angular-devkit/build-angular:app-shell",
+          "options": {
+            "route": "shell"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sandbox:build:production",
+              "serverTarget": "sandbox:server:production"
+            },
+            "development": {
+              "browserTarget": "sandbox:build:development",
+              "serverTarget": "sandbox:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
