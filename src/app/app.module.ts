@@ -16,6 +16,8 @@ import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing
 import { BoardComponent                } from "./Modules/Games/tic-tac-toe/board/board.component";
 import { TowerComponent                } from "./Modules/Games/hanoi-towers/tower/tower.component";
 import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/game-hanoi.component';
+import { AppServerModule               } from './app.module.server';
+import { AppShellComponent             } from './app-shell/app-shell.component';
 //
 const routes = [
   { path: 'Home'       , component: HomeComponent        },
@@ -26,7 +28,7 @@ const routes = [
   { path: '**'         , component: AppComponent         },
 ];
 @NgModule({
-    declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent,],
+    declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent ],
     providers: [HttpClient, provideClientHydration()],
     bootstrap: [AppComponent],
     imports: [
