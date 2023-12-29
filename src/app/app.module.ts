@@ -1,4 +1,4 @@
-import { NgModule                      } from '@angular/core';
+import { NgModule, isDevMode                      } from '@angular/core';
 import { NgbModule                     } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule                  } from '@angular/common';
 import { FormsModule                   } from '@angular/forms';
@@ -18,6 +18,7 @@ import { TowerComponent                } from "./Modules/Games/hanoi-towers/towe
 import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/game-hanoi.component';
 import { AppServerModule               } from './app.module.server';
 import { AppShellComponent             } from './app-shell/app-shell.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 //
 const routes = [
   { path: 'Home'       , component: HomeComponent        },
@@ -42,7 +43,13 @@ const routes = [
         RouterModule,
         RouterModule.forRoot(routes),
         BoardComponent,
-        TowerComponent
+        TowerComponent,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: !isDevMode(),
+          // Register the ServiceWorker as soon as the application is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        })
     ]
 })
 export class AppModule {}
