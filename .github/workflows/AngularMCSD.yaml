@@ -1,0 +1,31 @@
+name: Publish Angular App
+
+on:
+  push:
+    branches:
+      - main # Replace with your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '10.2.5'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: ng build --c=production --base-href=\"https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/\"
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          branch: gh-pages
+          folder: dist/sandbox/browser # Replace with your Angular app's build output directory
