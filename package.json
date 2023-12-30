@@ -9,7 +9,7 @@
     "test": "ng test",
     "deploy": "ng build --c=production --base-href=\"https://github.com/aperezNWO/CS_WebApiAngularDemo-forked-/\"",
     "publish": "npx ngh --dir=dist\\sandbox\\browser",
-    "build-and-deploy": "ng build --c=production --base-href=\"https://github.com/aperezNWO/CS_WebApiAngularDemo-forked-/\" && npx ngh --dir=dist\\angular-dijkstra"
+    "build-and-deploy": "ng build --c=production --base-href=\"https://github.com/aperezNWO/CS_WebApiAngularDemo-forked-/\" && npx ngh --dir=dist\\sandbox\\browser"
   },
   "private": true,
   "dependencies": {
