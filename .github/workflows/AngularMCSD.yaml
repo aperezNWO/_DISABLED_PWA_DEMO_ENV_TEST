@@ -28,4 +28,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           branch: gh-pages
-          folder: dist/sandbox/browser # Replace with your Angular app's build output directory
+          folder: dist/sandbox # Replace with your Angular app's build output directory
