@@ -44,7 +44,7 @@ export class SudokuComponent implements OnInit {
   downloadLink     : string = '';
   //
   rf_searchForm   = this.formBuilder.group({
-    _fileUpload          : ["", Validators.required],
+    _fileUpload   : ["", Validators.required],
   });
   //
   constructor(private algorithmService: AlgorithmService,private formBuilder: FormBuilder) {
