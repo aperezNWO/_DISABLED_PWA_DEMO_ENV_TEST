@@ -19,19 +19,23 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'  # Deploy only on the main branch
 
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 16
-      - run: npm install
-     
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
       - name: Build
-        run: npm build --c=production --base-href=\"https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/\"
+        run: npm run build -- --prod
 
-        run : mkdir -p dist/sandbox/browser
-
-      - uses: JamesIves/github-pages-deploy-action@3.7.1  # Replace with your preferred deployment action
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
-            branch: gh-pages
-            folder: dist/sandbox/browser # Replace with your Angular app's build output directory
+          branch: gh-pages
+          folder: dist/sandbox/browser # Replace with your Angular app's build output directory
