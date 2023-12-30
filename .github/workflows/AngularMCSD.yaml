@@ -25,7 +25,8 @@ jobs:
         run: npm build --c=production --base-href=\"https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/\"
 
       - name: Deploy to GitHub Pages
+        run : mkdir -p dist/sandbox/browser
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           branch: gh-pages
-          folder: ./dist/sandbox/browser # Replace with your Angular app's build output directory
+          folder: dist/sandbox/browser # Replace with your Angular app's build output directory
