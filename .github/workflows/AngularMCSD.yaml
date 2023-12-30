@@ -24,8 +24,10 @@ jobs:
       - name: Build
         run: npm build --c=production --base-href=\"https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/\"
 
-      - name: Deploy to GitHub Pages
+      - name : Check Deploy Directories 
         run : mkdir -p dist/sandbox/browser
+
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           branch: gh-pages
