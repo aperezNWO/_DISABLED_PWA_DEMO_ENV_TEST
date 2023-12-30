@@ -24,9 +24,6 @@ export class TicTacToeComponent implements OnInit {
   ngOnInit():void { 
     //
   }
-  ////////////////////////////////
-  // METODOS
-  ////////////////////////////////
 }
 
 
