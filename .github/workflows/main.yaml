@@ -1,0 +1,39 @@
+name: Angular CI/CD
+
+on: [push]  # Trigger on push events
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16  # Adjust as needed
+      - run: npm install
+      - run: npm test
+
+  deploy:
+    needs: build  # Depend on the build job
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Deploy only on the main branch
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+     
+      - name: Build
+        run: npm build --c=production --base-href=\"https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/\"
+
+      - name : Check Deploy Directories 
+        run : mkdir -p dist/sandbox/browser
+
+        name: Deploy to GitHub Pages
+      - uses: JamesIves/github-pages-deploy-action  # Replace with your preferred deployment action
+        with:
+            branch: gh-pages
+            folder: dist/sandbox/browser # Replace with your Angular app's build output directory
