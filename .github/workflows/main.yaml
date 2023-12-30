@@ -1,25 +1,15 @@
-name: Angular CI/CD
+name: Publish Angular App
 
-on: [push]  # Trigger on push events
+on:
+  push:
+    branches:
+      - main # Replace with your main branch name
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16  # Adjust as needed
-      - run: npm install
-      - run: npm test
-
-  deploy:
-    needs: build  # Depend on the build job
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'  # Deploy only on the main branch
-
-      steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
