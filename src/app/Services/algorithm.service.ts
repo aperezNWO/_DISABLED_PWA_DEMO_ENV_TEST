@@ -125,7 +125,7 @@ export class AlgorithmService {
       this.HTTPOptions_JSON,
     );
     //
-    console.log('Testing Url : ' + p_url);
+    console.log('Testing Url : [' + p_url+ ']');
     //
     return nodeJsOutput;
   }
