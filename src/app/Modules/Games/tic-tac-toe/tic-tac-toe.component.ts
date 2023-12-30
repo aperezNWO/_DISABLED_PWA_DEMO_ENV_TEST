@@ -1,6 +1,4 @@
-import { Component,OnInit  } from '@angular/core';
-import { CommonModule      } from '@angular/common';
-import { BoardComponent    } from './board/board.component';
+import { Component  } from '@angular/core';
 //
 @Component({
     selector: 'app-tic-tac-toe',
@@ -8,7 +6,7 @@ import { BoardComponent    } from './board/board.component';
     styleUrl: './tic-tac-toe.component.css',
 })
 //
-export class TicTacToeComponent implements OnInit {
+export class TicTacToeComponent  {
   ////////////////////////////////
   // CAMPOS / PROPIEDADES
   ////////////////////////////////
@@ -20,10 +18,6 @@ export class TicTacToeComponent implements OnInit {
       //
       console.log("[TIC-TAC-TOE - INICIO COMPONENTE");
   };
-  //
-  ngOnInit():void { 
-    //
-  }
 }
 
 

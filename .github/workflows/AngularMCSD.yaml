@@ -27,8 +27,16 @@ jobs:
       - name : Check Deploy Directories 
         run : mkdir -p dist/sandbox/browser
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        with:
-          branch: gh-pages
-          folder: dist/sandbox/browser # Replace with your Angular app's build output directory
+       name: Deploy to GitHub Pages
+      #  uses: JamesIves/github-pages-deploy-action@3.7.1
+      #  with:
+      #    branch: gh-pages
+      #    folder: dist/sandbox/browser # Replace with your Angular app's build output directory
+      run : actions/deploy-pages@v3
+      with:
+        token: ***
+        timeout: 600000
+        error_count: 10
+        reporting_interval: 5000
+        artifact_name: github-pages
+        preview: false
