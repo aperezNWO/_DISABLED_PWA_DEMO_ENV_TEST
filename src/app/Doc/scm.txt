@@ -43,7 +43,7 @@ https://github.com/aperezNWO/CS_WebApiAngularDemo-forked-/
 
 This URL will be accessible publicly, providing a permanent link to your deployed application.
 
-#npm run build build-and-deploy
+# npm run build-and-deploy
 
 -------------------------------------------------------------
 --[_] app-shell
