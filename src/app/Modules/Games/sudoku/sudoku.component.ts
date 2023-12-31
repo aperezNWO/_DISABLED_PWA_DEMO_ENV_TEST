@@ -1,16 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit            } from '@angular/core';
+import { ViewChild, AfterViewInit     } from '@angular/core';
 import { FormBuilder, Validators      } from '@angular/forms';
 import { HttpEventType, HttpResponse  } from '@angular/common/http';
 import { AlgorithmService             } from 'src/app/Services/algorithm.service';
 import { Observable                   } from 'rxjs';
 import { ListItem                     } from '../../../Models/algorithm-models.model';
+import { PdfEngine } from 'src/app/Models/pdf-engine.model';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 //
 @Component({
   selector: 'app-sudoku',
   templateUrl: './sudoku.component.html',
   styleUrl: './sudoku.component.css',
 })
-export class SudokuComponent implements OnInit {
+export class SudokuComponent implements OnInit, AfterViewInit {
   //
   board: number[][] = [];
   //
@@ -20,11 +24,12 @@ export class SudokuComponent implements OnInit {
   //
   protected tituloGenerarDesde    : string = 'Generar Desde';
   //
-  @ViewChild('_languajeList') _languajeList: any;
-  @ViewChild('_SourceList')   _sourceList: any;
-  @ViewChild('_fileUpload')   _fileUpload: any;
+  @ViewChild('_languajeList') _languajeList   : any;
+  @ViewChild('_SourceList')   _sourceList     : any;
+  @ViewChild('_fileUpload')   _fileUpload     : any;
+  @ViewChild('_sudoku_board')  _sudoku_board  : any;
     //
-  public __languajeList: any;
+  public __languajeList: any;  
   //
   public __generateSourceList : any;
   //
@@ -46,10 +51,15 @@ export class SudokuComponent implements OnInit {
   rf_searchForm   = this.formBuilder.group({
     _fileUpload   : ["", Validators.required],
   });
+  pageTitle       : string = '[SUDOKU]';
   //
   constructor(private algorithmService: AlgorithmService,private formBuilder: FormBuilder) {
     //
     console.log('[SUDOKU - INGRESO]');
+  }
+  //
+  ngAfterViewInit(): void {
+    //
   }
   //
   ngOnInit(): void {
@@ -361,5 +371,23 @@ export class SudokuComponent implements OnInit {
     };
     //
     solveSudoku.subscribe(solveSudokuObserver);
+  }
+  //
+  _GetPdf() {
+    //
+    console.log(this.pageTitle + ": [GENERANDO PDF]" );
+    //
+    const areaToPrint = this._sudoku_board.nativeElement; // Replace with your HTML area's ID
+    //
+    html2canvas(areaToPrint).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4'); // Portrait, millimeters, A4 size
+  
+      const imgWidth = 210; // A4 size
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('generated.pdf');
+    });
   }
 }
