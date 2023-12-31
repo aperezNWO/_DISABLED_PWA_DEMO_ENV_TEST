@@ -380,6 +380,7 @@ export class SudokuComponent implements OnInit, AfterViewInit {
     const areaToPrint = this._sudoku_board.nativeElement; // Replace with your HTML area's ID
     //
     html2canvas(areaToPrint).then((canvas) => {
+      //
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4'); // Portrait, millimeters, A4 size
   
