@@ -9,11 +9,14 @@ import jsPDF            from "jspdf";
 export class PdfEngine
 {
     //
-    public _GetPDF(pageTitle: string, c_canvas : any, divCanvas_Pdf : any, fileName: string): Observable<void> {
-        //            
-        return new Observable<void>((observer) => {
+    getPdf(pageTitle: string, c_canvas : any, divCanvas_Pdf : any, fileName: string, observer : any):void
+    {
         //
         console.log(pageTitle + ": [GENERANDO PDF]" );
+        //
+        const timestamp = new Date().toISOString();
+        //
+        fileName        = `${fileName}_${timestamp}.pdf`;
         //
         const areaToPrint   = c_canvas.nativeElement;
         const borderToPrint = divCanvas_Pdf.nativeElement;
@@ -30,10 +33,16 @@ export class PdfEngine
             pdfDoc.addImage(imgData, 0, 0, w, h);
             //
             pdfDoc.save(fileName);
-            //
-            observer.next();
-            observer.complete();
         });
-    //    
-    })};
+        //
+        observer.next(fileName);
+        observer.complete();
+    }
+    //
+    public _GetPDF(pageTitle: string, c_canvas : any, divCanvas_Pdf : any, fileName: string): Observable<string> {
+        //
+        let pdfObservable = new Observable<string>((observer) => this.getPdf(pageTitle,c_canvas,divCanvas_Pdf,fileName,observer));
+        //            
+        return pdfObservable;
+    };
 }

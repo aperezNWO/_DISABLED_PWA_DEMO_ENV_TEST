@@ -10,7 +10,7 @@ export class AppComponent {
   //
   title          : string = '[PWA DEMO - UNIT TESTING]';
   appName        : string = '[PWA DEMO - UNIT TESTING]';
-  appVersion     : string = '1.0.2.3';
+  appVersion     : string = '1.0.2.4';
   runtimeVersion : string = VERSION.full;
   //
   constructor(private router: Router) {

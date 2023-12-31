@@ -374,21 +374,25 @@ export class SudokuComponent implements OnInit, AfterViewInit {
   //
   _GetPdf() {
     //
-    let fileName  : string     = "SUDOKU_BOARD";
-    let pdfEngine : PdfEngine  = new PdfEngine
+    let suffix          : string     =  (this.sudokuSolved)? 'SOLVED' : 'STARTED';
+    //
+    let fileName_input  : string     = `SUDOKU_BOARD_${suffix}`;
+    let fileName_output : string     = '';
+    //
+    this.message = '[...Generando PDF...]';
     //
     this.pdfEngine._GetPDF
       (
         this.pageTitle,
         this._sudoku_board,
         this._sudoku_board,
-        fileName,
+        fileName_input,
       )
       .subscribe(
       {
-        next: () =>{
-            //
-            this.message = '...Generando PDF...';
+        next: (fileName) =>{
+          //
+          fileName_output = fileName;
         },
         error: (error: { message: string; }) => {
             //
@@ -396,7 +400,7 @@ export class SudokuComponent implements OnInit, AfterViewInit {
         },
         complete: () => {
             //
-            this.message   = 'Se ha generado archivo PDF';
+            this.message = `Se ha generado el archivo PDF :[ ${fileName_output} ]`;
         }
       }
     );
