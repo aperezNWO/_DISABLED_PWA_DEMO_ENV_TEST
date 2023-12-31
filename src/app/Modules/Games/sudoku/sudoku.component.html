@@ -55,7 +55,7 @@
         </select>
     </div>
 <!-- GENERERAR DESDE ... / FIN    -->
-<!-- LISTADO LENGUAJE / FIN -->    
+<!-- LISTADO LENGUAJE    / FIN -->    
 <hr>
 <form [formGroup]="rf_searchForm" (ngSubmit)="this._SolveSudoku()">
     <div class="fileUpload" align="left" [hidden]="this._fileUploadDivHidden">
@@ -105,7 +105,9 @@
     </div>
 </form>
 <hr/>
-<input type="button" name="btnGeneratePdf" value="[GENERAR PDF]" (click)="this._GetPdf()">
+<div *ngIf="(this.board.length>0)" align="left">
+    <input type="button" name="btnGeneratePdf" value="[GENERAR PDF]" (click)="this._GetPdf()" [disabled]="(this.message == '...Generando PDF...')">
+</div>
 <!--- BUTTONS / FIN -->
 <hr />
 <a routerLink="/Home">[Home]</a>      

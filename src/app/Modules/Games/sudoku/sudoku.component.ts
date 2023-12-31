@@ -5,9 +5,7 @@ import { HttpEventType, HttpResponse  } from '@angular/common/http';
 import { AlgorithmService             } from 'src/app/Services/algorithm.service';
 import { Observable                   } from 'rxjs';
 import { ListItem                     } from '../../../Models/algorithm-models.model';
-import { PdfEngine } from 'src/app/Models/pdf-engine.model';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { PdfEngine                    } from 'src/app/Models/pdf-engine.model';
 //
 @Component({
   selector: 'app-sudoku',
@@ -375,20 +373,30 @@ export class SudokuComponent implements OnInit, AfterViewInit {
   //
   _GetPdf() {
     //
-    console.log(this.pageTitle + ": [GENERANDO PDF]" );
+    let fileName  : string     = "SUDOKU_BOARD";
+    let pdfEngine : PdfEngine  = new PdfEngine
+    (
+      this.pageTitle,
+      this._sudoku_board,
+      this._sudoku_board,
+      fileName,
+     );
     //
-    const areaToPrint = this._sudoku_board.nativeElement; // Replace with your HTML area's ID
-    //
-    html2canvas(areaToPrint).then((canvas) => {
-      //
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4'); // Portrait, millimeters, A4 size
-  
-      const imgWidth = 210; // A4 size
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save('generated.pdf');
-    });
+    pdfEngine._GetPDF().subscribe(
+      {
+        next: () =>{
+            //
+            this.message = '...Generando PDF...'
+        },
+        error: (error) => {
+            //
+            this.message   = 'ha ocurrido un error : ' + error.message;
+        },
+        complete: () => {
+            //
+            this.message   = 'Se ha generado archivo PDF';
+        }
+      }
+    );
   }
 }
