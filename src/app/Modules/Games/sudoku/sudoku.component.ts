@@ -1,17 +1,18 @@
-import { Component, OnInit            } from '@angular/core';
+import { Component, Injectable, OnInit            } from '@angular/core';
 import { ViewChild, AfterViewInit     } from '@angular/core';
 import { FormBuilder, Validators      } from '@angular/forms';
 import { HttpEventType, HttpResponse  } from '@angular/common/http';
 import { AlgorithmService             } from 'src/app/Services/algorithm.service';
 import { Observable                   } from 'rxjs';
 import { ListItem                     } from '../../../Models/algorithm-models.model';
-import { PdfEngine                    } from 'src/app/Models/pdf-engine.model';
+import { PdfEngine                    } from 'src/app/Models/pdf-engine.service';
 //
 @Component({
   selector: 'app-sudoku',
   templateUrl: './sudoku.component.html',
   styleUrl: './sudoku.component.css',
 })
+//
 export class SudokuComponent implements OnInit, AfterViewInit {
   //
   board: number[][] = [];
@@ -51,7 +52,7 @@ export class SudokuComponent implements OnInit, AfterViewInit {
   });
   pageTitle       : string = '[SUDOKU]';
   //
-  constructor(private algorithmService: AlgorithmService,private formBuilder: FormBuilder) {
+  constructor(private algorithmService: AlgorithmService,private formBuilder: FormBuilder, public pdfEngine: PdfEngine) {
     //
     console.log('[SUDOKU - INGRESO]');
   }
@@ -375,20 +376,21 @@ export class SudokuComponent implements OnInit, AfterViewInit {
     //
     let fileName  : string     = "SUDOKU_BOARD";
     let pdfEngine : PdfEngine  = new PdfEngine
-    (
-      this.pageTitle,
-      this._sudoku_board,
-      this._sudoku_board,
-      fileName,
-     );
     //
-    pdfEngine._GetPDF().subscribe(
+    this.pdfEngine._GetPDF
+      (
+        this.pageTitle,
+        this._sudoku_board,
+        this._sudoku_board,
+        fileName,
+      )
+      .subscribe(
       {
         next: () =>{
             //
-            this.message = '...Generando PDF...'
+            this.message = '...Generando PDF...';
         },
-        error: (error) => {
+        error: (error: { message: string; }) => {
             //
             this.message   = 'ha ocurrido un error : ' + error.message;
         },

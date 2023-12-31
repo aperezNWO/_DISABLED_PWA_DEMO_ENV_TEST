@@ -1,23 +1,22 @@
+import { Injectable   } from "@angular/core";
 import { Observable   } from "rxjs";
 import html2canvas      from "html2canvas";
 import jsPDF            from "jspdf";
 //
+@Injectable({
+    providedIn: 'root',
+})
 export class PdfEngine
 {
     //
-    constructor(public pageTitle: string, public c_canvas : any, public divCanvas_Pdf : any, public fileName: string)
-    {
-        //   
-    }
-    //
-    public _GetPDF(): Observable<void> {
+    public _GetPDF(pageTitle: string, c_canvas : any, divCanvas_Pdf : any, fileName: string): Observable<void> {
         //            
         return new Observable<void>((observer) => {
         //
-        console.log(this.pageTitle + ": [GENERANDO PDF]" );
+        console.log(pageTitle + ": [GENERANDO PDF]" );
         //
-        const areaToPrint   = this.c_canvas.nativeElement;
-        const borderToPrint = this.divCanvas_Pdf.nativeElement;
+        const areaToPrint   = c_canvas.nativeElement;
+        const borderToPrint = divCanvas_Pdf.nativeElement;
         //
         html2canvas(areaToPrint).then((_canvas) => {
             //
@@ -30,7 +29,7 @@ export class PdfEngine
             //
             pdfDoc.addImage(imgData, 0, 0, w, h);
             //
-            pdfDoc.save(this.fileName);
+            pdfDoc.save(fileName);
             //
             observer.next();
             observer.complete();
