@@ -1,6 +1,6 @@
 import { Component, VERSION } from '@angular/core';
-import { Router } from '@angular/router';
-import { ConfigService } from './Services/config.service';
+import { Router             } from '@angular/router';
+import { ConfigService      } from './Services/config.service';
 
 @Component({
   selector: 'app-root',

@@ -4,8 +4,9 @@ import {
   HttpEvent,
   HttpHeaders,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable    } from '@angular/core';
+import { Observable    } from 'rxjs';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,17 +28,30 @@ export class AlgorithmService {
     }),
     responseType: 'text' as 'json',
   };
-  public get _prefix(): string {
+  //
+  public get _baseUrlNetCore(): string {
     //
-    return 'https://webapiangulardemo.somee.com/';
-    //return 'http://localhost:83/'
+    return this.__baseUrlNetCore;
   }
-  readonly prefix: string = this._prefix;
+  //
+  public get _baseUrlNodeJs(): string {
+    //
+    return this.__baseUrlNodeJs;
+  }
+  //
+  protected __baseUrlNetCore        : string = '';
+  protected __baseUrlNodeJs         : string = '';
   ////////////////////////////////////////////////////////////////
   // EVENT HANDLERS
   ////////////////////////////////////////////////////////////////
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public configService : ConfigService) {
     ////
+    this.__baseUrlNetCore = this.configService.getConfigValue('baseUrlNetCore');
+    this.__baseUrlNodeJs  = this.configService.getConfigValue('baseUrlNodeJs');
+    //
+    console.log("baseUrlNetCore : " + this.__baseUrlNetCore);
+    console.log("baseUrlNodeJs  : " + this.__baseUrlNodeJs);
+    
   }
   ////////////////////////////////////////////////////////////////
   // METODOS
@@ -47,8 +61,7 @@ export class AlgorithmService {
   ////////////////////////////////////////////////////////////////
   _GetSudoku(): Observable<string> {
     //
-    let p_url: string =
-      'https://webapiangulardemo.somee.com/Demos/Sudoku_Generate_CPP';
+    let p_url          :string = `${this.__baseUrlNetCore}Demos/Sudoku_Generate_CPP`;
     //
     let sudokuGenerated: Observable<string> = this.http.get<string>(
       p_url,
@@ -60,7 +73,7 @@ export class AlgorithmService {
   //
   _GetSudoku_NodeJS(): Observable<string> {
     //
-    let p_url: string = 'https://w3k4xg-4000.csb.app/Sudoku_Generate_NodeJS';
+    let p_url: string = `${this.__baseUrlNodeJs}Sudoku_Generate_NodeJS`;
     //
     let sudokuGenerated: Observable<string> = this.http.get<string>(
       p_url,
@@ -72,7 +85,7 @@ export class AlgorithmService {
   //
   _SolveSudoku(p_matrix: string): Observable<string> {
     //
-    let p_url: string = `https://webapiangulardemo.somee.com/Demos/Sudoku_Solve_CPP?p_matrix=${p_matrix}`;
+    let p_url: string = `${this.__baseUrlNetCore}Demos/Sudoku_Solve_CPP?p_matrix=${p_matrix}`;
     //
     let sudokuSolved: Observable<string> = this.http.get<string>(
       p_url,
@@ -84,7 +97,7 @@ export class AlgorithmService {
   //
   _SolveSudoku_NodeJS(p_matrix: string): Observable<string> {
     //
-    let p_url: string = `https://w3k4xg-4000.csb.app/Sudoku_Solve_NodeJS?p_matrix=${p_matrix}`;
+    let p_url: string = `${this.__baseUrlNodeJs}Sudoku_Solve_NodeJS?p_matrix=${p_matrix}`;
     //
     let sudokuSolved: Observable<string> = this.http.get<string>(
       p_url,
@@ -102,7 +115,7 @@ export class AlgorithmService {
     //
     formData.append('file', file);
     //
-    let url = `${this.prefix}demos/Sudoku_Upload_File`;
+    let url = `${this.__baseUrlNetCore}demos/Sudoku_Upload_File`;
     //
     console.log('[SUDOKU] - (UPLOADING FILE) url: ' + url);
     //
@@ -118,7 +131,7 @@ export class AlgorithmService {
   ////////////////////////////////////////////////////////////////
   _TestNodeJs(): Observable<string> {
     //
-    let p_url: string = `https://w3k4xg-4000.csb.app/databaseconnect`;
+    let p_url: string = `${this.__baseUrlNodeJs}databaseconnect`;
     //
     let nodeJsOutput: Observable<string> = this.http.get<string>(
       p_url,

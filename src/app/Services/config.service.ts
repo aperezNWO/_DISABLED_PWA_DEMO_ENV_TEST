@@ -9,7 +9,7 @@ export class ConfigService {
   constructor(private http: HttpClient) {}
 
   loadConfig() {
-    return this.http.get('../assets/config.json').toPromise()
+    return this.http.get('./assets/config.json').toPromise()
       .then((data: any) => {
          //
          environment.externalConfig = data; // Assign loaded data to environment variable

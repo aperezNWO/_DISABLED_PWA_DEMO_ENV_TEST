@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component        } from '@angular/core';
+import { Router           } from '@angular/router';
 import { AlgorithmService } from 'src/app/Services/algorithm.service';
-import { Observable } from 'rxjs';
+import { Observable       } from 'rxjs';
 //
 @Component({
   selector: 'app-unt-testing',
