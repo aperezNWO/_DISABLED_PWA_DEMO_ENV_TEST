@@ -46,6 +46,12 @@ This URL will be accessible publicly, providing a permanent link to your deploye
 # npm run build-and-deploy
 
 -------------------------------------------------------------
+--[_] chat
+-------------------------------------------------------------
+
+Socket.IO Client: npm install socket.io-client
+
+-------------------------------------------------------------
 --[_] app-shell
 -------------------------------------------------------------
 ng run sandbox:app-shell:production  
