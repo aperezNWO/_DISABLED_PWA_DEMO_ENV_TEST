@@ -18,7 +18,6 @@ import { TowerComponent                } from "./Modules/Games/hanoi-towers/towe
 import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/game-hanoi.component';
 import { ServiceWorkerModule           } from '@angular/service-worker';
 import { ConfigService                 } from './Services/config.service';
-import { ChatService                   } from './Modules/chat/chat.service'
 //
 const routes = [
   { path: 'Home'       , component: HomeComponent        },
