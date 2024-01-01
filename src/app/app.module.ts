@@ -3,7 +3,8 @@ import { NgbModule                     } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule                  } from '@angular/common';
 import { FormsModule                   } from '@angular/forms';
 import { ReactiveFormsModule           } from '@angular/forms';
-import { BrowserModule, provideClientHydration                 } from '@angular/platform-browser';
+import { BrowserModule                 } from '@angular/platform-browser';
+import { provideClientHydration        } from '@angular/platform-browser';
 import { BrowserAnimationsModule       } from '@angular/platform-browser/animations';
 import { RouterModule                  } from '@angular/router';
 import { HttpClient                    } from '@angular/common/http';
@@ -16,8 +17,9 @@ import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing
 import { BoardComponent                } from "./Modules/Games/tic-tac-toe/board/board.component";
 import { TowerComponent                } from "./Modules/Games/hanoi-towers/tower/tower.component";
 import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/game-hanoi.component';
-import { ServiceWorkerModule           } from '@angular/service-worker';
+import { ChatComponent                 } from './Modules/chat/chat/chat.component';
 import { ConfigService                 } from './Services/config.service';
+import { ServiceWorkerModule           } from '@angular/service-worker';
 //
 const routes = [
   { path: 'Home'       , component: HomeComponent        },
@@ -25,6 +27,8 @@ const routes = [
   { path: 'TicTacToe'  , component: TicTacToeComponent   },
   { path: 'Hanoi'      , component: HanoiTowersComponent },
   { path: 'UnitTesting', component: UntTestingComponent  },
+  { path: 'UnitTesting', component: UntTestingComponent  },
+  { path: 'Chat'       , component: ChatComponent        },
   { path: '**'         , component: AppComponent         },
 ];
 
@@ -34,7 +38,7 @@ export function loadConfig(configService: ConfigService) {
 }
 
 @NgModule({
-    declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent ],
+    declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent, ChatComponent ],
     providers: [HttpClient, provideClientHydration(),
       [
         ConfigService,
