@@ -1,4 +1,4 @@
-import { NgModule, isDevMode                      } from '@angular/core';
+import { APP_INITIALIZER, NgModule, isDevMode                      } from '@angular/core';
 import { NgbModule                     } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule                  } from '@angular/common';
 import { FormsModule                   } from '@angular/forms';
@@ -16,9 +16,8 @@ import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing
 import { BoardComponent                } from "./Modules/Games/tic-tac-toe/board/board.component";
 import { TowerComponent                } from "./Modules/Games/hanoi-towers/tower/tower.component";
 import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/game-hanoi.component';
-import { AppServerModule               } from './app.module.server';
-import { AppShellComponent             } from './app-shell/app-shell.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { ServiceWorkerModule           } from '@angular/service-worker';
+import { ConfigService                 } from './Services/config.service';
 //
 const routes = [
   { path: 'Home'       , component: HomeComponent        },
@@ -28,9 +27,25 @@ const routes = [
   { path: 'UnitTesting', component: UntTestingComponent  },
   { path: '**'         , component: AppComponent         },
 ];
+
+//
+export function loadConfig(configService: ConfigService) {
+  return () => configService.loadConfig();
+}
+
 @NgModule({
     declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent ],
-    providers: [HttpClient, provideClientHydration()],
+    providers: [HttpClient, provideClientHydration(),
+      [
+        ConfigService,
+        {
+          provide   : APP_INITIALIZER,
+          useFactory: loadConfig,
+          deps      : [ConfigService],
+          multi     : true
+        }
+      ],
+    ],
     bootstrap: [AppComponent],
     imports: [
         NgbModule,
