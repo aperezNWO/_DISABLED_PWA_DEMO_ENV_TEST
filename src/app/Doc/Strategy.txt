@@ -121,3 +121,13 @@ Sudoku solved:
 */
 
 /////////////////////////////////////////////
+
+show me an angular and node.js code to crreate an online tic tac toe app
+
+ChatGPT
+
+https://chat.openai.com/share/f383e00f-3b68-45c8-ad3f-d5bd32b9933e
+
+/////////////////////////////////////////////
+
+
