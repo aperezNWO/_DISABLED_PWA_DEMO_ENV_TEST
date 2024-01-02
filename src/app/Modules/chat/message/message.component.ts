@@ -1,5 +1,5 @@
 // message.component.ts
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-message',
@@ -7,5 +7,11 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent {
-  @Input() messages: any;
+  @Input() dataFromParent: any;
+  @Output() dataFromChild = new EventEmitter<any>();
+  
+  receiveData(data: any) {
+    // Handle the data received from the child
+    console.log("[CHAT APP] - Received : " + JSON.stringify(data));
+  }
 }

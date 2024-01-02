@@ -7,7 +7,20 @@
 <input type="text" #txtMessage>
 <input type="button" value="[SEND MESSAGE]" (click)="this.sendMessage(txtMessage.value)">
 <hr>
-<app-message></app-message>
+<!--app-message 
+        [dataFromParent]="this.parentData"
+        (dataFromChild)="receiveData($event)"></app-message>-->
+<div id="divMessages">
+        <table class="message-data" *ngFor="let message of this.parentData">
+        <tr>
+           <td>
+                <span>
+                        {{message}}           
+                </span>
+          </td>
+        </tr>
+        </table>
+</div>
 <!-- MESSAGES / FIN    -->
 <hr />
 <a routerLink="/Home">[Volver al Menú]</a>  
