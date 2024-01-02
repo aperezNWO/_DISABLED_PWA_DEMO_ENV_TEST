@@ -13,15 +13,13 @@ export class ChatService {
 
   //
   constructor() {
-    //this.socket = io('http://localhost:3000');
+    //
     this.socket = io('https://2ylppr-3000.csb.app', {
-      //withCredentials: true,
+      //
       extraHeaders: {
-        //"Access-Control-Allow-Origin": "https://localhost:4200"
-        //"Access-Control-Allow-Origin": "https://apereznwo.github.io/"
         "Access-Control-Allow-Origin": "*"
     }});
-     // Replace with your server URL
+    // Replace with your server URL
     this.socket.on('message', (message: any) => {
       //
       console.log("received message : [" + JSON.stringify(message) + "]");
