@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1704178985473,
+  "timestamp": 1704179265806,
   "index": "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/index.html",
   "assetGroups": [
     {
@@ -15,7 +15,7 @@
         "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/896.5d37cbc1be7b2deb.js",
         "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/favicon.ico",
         "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/index.html",
-        "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/main.a4f3831086c99321.js",
+        "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/main.89fdb17d43a8eb9b.js",
         "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/manifest.webmanifest",
         "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/polyfills.745d909064a74d3c.js",
         "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/runtime.affe99af57e3588d.js",
@@ -60,8 +60,8 @@
     "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/assets/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
     "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/assets/sudoku.txt": "a11677cdf143c6ab92080e8a4247c50083c14e71",
     "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/favicon.ico": "04c278dba3e54393c4c980f7fd4dcd43796ef813",
-    "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/index.html": "f33dd343c2036102d664b2e4150f521b974d8f0d",
-    "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/main.a4f3831086c99321.js": "977c02287d0b5572ce55ffec96edcb94ab7f2f04",
+    "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/index.html": "84127b4543eb334e9f0c1b9743751808660032ce",
+    "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/main.89fdb17d43a8eb9b.js": "71bf723c481328c6592a56adf8c495909df8bf26",
     "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/manifest.webmanifest": "65e410739a6f959d860aaa962ad6c1c117cdff87",
     "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/polyfills.745d909064a74d3c.js": "8780df41f3f52b7f0579fa847687ff0b1d5fea7f",
     "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/runtime.affe99af57e3588d.js": "1e318ab06487ddd0001d6bc5538534dd85b4587c",
