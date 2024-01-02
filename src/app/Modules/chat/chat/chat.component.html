@@ -1,7 +1,13 @@
 <h1>[CHAT]</h1>
 <hr/>
-<!-- MESSAGES / INICIO -->
 <h4>[MESSAGES]</h4>
+<!-- MESSAGES / INICIO -->
+<hr>
+<label for="txtMessage">Ingese Mensaje :</label>
+<input type="text" #txtMessage>
+<input type="button" value="[SEND MESSAGE]" (click)="this.sendMessage(txtMessage.value)">
+<hr>
+<app-message></app-message>
 <!-- MESSAGES / FIN    -->
 <hr />
 <a routerLink="/Home">[Volver al Menú]</a>  

@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent {
-  @Input() message: any;
+  @Input() messages: any;
 }

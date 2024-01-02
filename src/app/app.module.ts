@@ -17,6 +17,7 @@ import { UntTestingComponent           } from './Modules/UnitTesting/unt-testing
 import { BoardComponent                } from "./Modules/Games/tic-tac-toe/board/board.component";
 import { TowerComponent                } from "./Modules/Games/hanoi-towers/tower/tower.component";
 import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/game-hanoi.component';
+import { MessageComponent              } from './Modules/chat/message/message.component';
 import { ChatComponent                 } from './Modules/chat/chat/chat.component';
 import { ConfigService                 } from './Services/config.service';
 import { ServiceWorkerModule           } from '@angular/service-worker';
@@ -38,7 +39,7 @@ export function loadConfig(configService: ConfigService) {
 }
 
 @NgModule({
-    declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent, ChatComponent ],
+    declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent, MessageComponent, ChatComponent ],
     providers: [HttpClient, provideClientHydration(),
       [
         ConfigService,
