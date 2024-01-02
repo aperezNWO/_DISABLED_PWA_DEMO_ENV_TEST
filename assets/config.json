@@ -1,6 +1,6 @@
 {
     "appName"          : "[PWA DEMO] -- [UNIT TESTING]",
-    "appVersion"       : "1.0.2.9",
+    "appVersion"       : "1.0.2.11",
     "baseUrlNetCore"   : "https://webapiangulardemo.somee.com/",
     "baseUrlNodeJs"    : "https://w3k4xg-4000.csb.app/"
 }
