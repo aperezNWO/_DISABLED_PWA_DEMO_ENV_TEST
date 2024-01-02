@@ -14,10 +14,10 @@ export class ChatService {
   //
   constructor() {
     //this.socket = io('http://localhost:3000');
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('https://2ylppr-3000.csb.app:3000', {
       withCredentials: true,
       extraHeaders: {
-        "Access-Control-Allow-Origin": "http://localhost:4200"
+        "Access-Control-Allow-Origin": "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/"
     }});
      // Replace with your server URL
     this.socket.on('message', (message: any) => {
