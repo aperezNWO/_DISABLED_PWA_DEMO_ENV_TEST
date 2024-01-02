@@ -1,24 +1,66 @@
-import { CommonModule } from '@angular/common';
-import { Component    } from '@angular/core';
-import { ChatService  } from 'src/app/Services/chat.service';
+import { CommonModule             } from '@angular/common';
+import { Component, ViewChild     } from '@angular/core';
+import { ListItem } from 'src/app/Models/algorithm-models.model';
+import { TicTacToeEngine          } from 'src/app/Models/game-engine.model';
+import { ChatService              } from 'src/app/Services/chat.service';
+import { SquareComponent } from "../square/square.component";
 
 @Component({
-  selector: 'app-board-online',
-  standalone: true,
-  imports    : [  CommonModule ],
-  templateUrl: './board.component.html',
-  styleUrl: './board.component.css'
+    selector: 'app-board-online',
+    standalone: true,
+    templateUrl: './board.component.html',
+    styleUrl: './board.component.css',
+    imports: [CommonModule, SquareComponent]
 })
 export class BoardOnlineComponent {
-  //
+  //--------------------------------------------------------------------
+  // CHAT COMPONENT 
+  //--------------------------------------------------------------------
   parentData: any[] = [];
+  //--------------------------------------------------------------------
+  // TIC TAC TOE COMPONENT 
+  //--------------------------------------------------------------------
+  protected tituloSource                   : string = '¿Quien Inicia?';
+  protected __SourceList                   : any;
+  @ViewChild('_SourceList')   _sourceList  : any;
   //
-  constructor(private chatService: ChatService) {}
+  protected IsNewGame                      : boolean = false;
+  protected showBoard                      : boolean = false;
+  //
+  public    ticTacToeEngine                : TicTacToeEngine = new TicTacToeEngine();
+  //  
+  constructor(private chatService: ChatService) {
+      //
+  }
   //
   ngOnInit() {
+    //--------------------------------------------------------------------
+    // CHAT COMPONENT 
+    //--------------------------------------------------------------------
     this.chatService.getMessages().subscribe(messages => this.parentData = messages);
     this.chatService.onNewMessage.subscribe(message   => this.NotifyingMessage(message));
+    //--------------------------------------------------------------------
+    // TIC TAC TOE COMPONENT 
+    //--------------------------------------------------------------------
+    console.log("[TIC-TAC-TOE - INICIAR VALORES");
+    //
+    this.__SourceList = new Array();
+    this.__SourceList.push(new ListItem(0, '(SELECCIONE OPCION..)'   , false));
+    this.__SourceList.push(new ListItem(this.ticTacToeEngine.COMPUTER, '[INICIA MAQUINA]'     , true));
+    this.__SourceList.push(new ListItem(this.ticTacToeEngine.HUMAN   , '[INICIA JUGADOR]'     , false));
+    //
+    this.ticTacToeEngine.initialise();
   }
+  //
+  ngAfterViewInit() {
+    //--------------------------------------------------------------------
+    // TIC TAC TOE COMPONENT 
+    //--------------------------------------------------------------------
+    this._sourceList.nativeElement.options.selectedIndex = 1;
+  }
+  //--------------------------------------------------------------------
+  // CHAT COMPONENT 
+  //--------------------------------------------------------------------
   //
   NotifyingMessage(message: string): void {
     console.log("Pushing data to client : " + message);
@@ -30,5 +72,41 @@ export class BoardOnlineComponent {
     console.log("sending message: ", message);
     this.chatService.sendMessage(message);
   }
-
+  //--------------------------------------------------------------------
+  // TIC TAC TOE COMPONENT 
+  //--------------------------------------------------------------------
+   //
+   makeMove(n: number): void {
+    //
+    console.log(`[TIC-TAC-TOE] - [Click on cel : {${n}}] `);
+    //
+    this.ticTacToeEngine.makeMove(n);
+  }
+  //
+  newGame():void{
+    //
+    console.log("[GAME - TIC-TAC-TOE] - [NEW GAME]")
+    //
+    this.ticTacToeEngine.initialise();
+    //
+    this.IsNewGame = true;
+    //
+    this.showBoard = false;
+  }
+  //
+  startGame():void {
+    //
+    console.log("[GAME - TIC-TAC-TOE] - [START GAME]")
+    //
+    let selectedvalue: number = this._sourceList.nativeElement.options[this._sourceList.nativeElement.options.selectedIndex].value;
+    //
+    if (selectedvalue == this.ticTacToeEngine.COMPUTER ) {
+        //
+        this.ticTacToeEngine.makeComputerMove();
+    }
+    //
+    this.IsNewGame = false;
+    //
+    this.showBoard = true;
+  }
 }
