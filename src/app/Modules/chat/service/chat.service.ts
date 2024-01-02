@@ -14,7 +14,7 @@ export class ChatService {
   //
   constructor() {
     //this.socket = io('http://localhost:3000');
-    this.socket = io('https://2ylppr-3000.csb.app:3000', {
+    this.socket = io('https://2ylppr-3000.csb.app', {
       withCredentials: true,
       extraHeaders: {
         "Access-Control-Allow-Origin": "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/"
