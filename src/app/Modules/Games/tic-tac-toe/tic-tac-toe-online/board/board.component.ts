@@ -48,6 +48,7 @@ export class BoardOnlineComponent {
     this.__SourceList.push(new ListItem(0, '(SELECCIONE OPCION..)'   , false));
     this.__SourceList.push(new ListItem(this.ticTacToeEngine.COMPUTER, '[INICIA MAQUINA]'     , true));
     this.__SourceList.push(new ListItem(this.ticTacToeEngine.HUMAN   , '[INICIA JUGADOR]'     , false));
+    this.__SourceList.push(new ListItem(this.ticTacToeEngine.HUMAN   , '[JUGAR EN LINEA]'     , false));
     //
     this.ticTacToeEngine.initialise();
   }
@@ -78,12 +79,22 @@ export class BoardOnlineComponent {
    //
    makeMove(n: number): void {
     //
-    console.log(`[TIC-TAC-TOE] - [Click on cel : {${n}}] `);
+    let message : string = `[TIC-TAC-TOE] - [Click on cel : {${n+1}}] `
+    //
+    console.log(message);
     //
     this.ticTacToeEngine.makeMove(n);
+    //------------------------------------
+    // CHAT
+    //----------------------------------- 
+    //
+    this.chatService.sendMessage(message);
   }
   //
   newGame():void{
+    //--------------------------------------------------------------------
+    // TIC TAC TOE COMPONENT 
+    //--------------------------------------------------------------------
     //
     console.log("[GAME - TIC-TAC-TOE] - [NEW GAME]")
     //
@@ -92,6 +103,10 @@ export class BoardOnlineComponent {
     this.IsNewGame = true;
     //
     this.showBoard = false;
+
+    //--------------------------------------------------------------------
+    // CHAT COMPONENT 
+    //--------------------------------------------------------------------
   }
   //
   startGame():void {

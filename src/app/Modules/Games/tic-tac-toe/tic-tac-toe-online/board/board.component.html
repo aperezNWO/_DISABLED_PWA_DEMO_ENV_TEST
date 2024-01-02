@@ -41,13 +41,6 @@
 <h4>[MESSAGES]</h4>
 <!-- MESSAGES / INICIO -->
 <hr>
-<label for="txtMessage">Ingese Mensaje :</label>
-<input type="text" #txtMessage>
-<input type="button" value="[SEND MESSAGE]" (click)="this.sendMessage(txtMessage.value)">
-<hr>
-<!--app-message 
-        [dataFromParent]="this.parentData"
-        (dataFromChild)="receiveData($event)"></app-message>-->
 <div id="divMessages">
         <table class="message-data" *ngFor="let message of this.parentData">
         <tr>
