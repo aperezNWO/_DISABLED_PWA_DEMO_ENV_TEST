@@ -17,7 +17,7 @@ export class ChatService {
     this.socket = io('https://2ylppr-3000.csb.app', {
       withCredentials: true,
       extraHeaders: {
-        "Access-Control-Allow-Origin": "https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/"
+        "Access-Control-Allow-Origin": "https://apereznwo.github.io/"
     }});
      // Replace with your server URL
     this.socket.on('message', (message: any) => {
