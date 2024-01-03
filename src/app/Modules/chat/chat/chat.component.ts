@@ -1,6 +1,8 @@
 // chat.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChatService       } from '../../../Services/chat.service';
+import { DatePipe          } from '@angular/common';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -8,26 +10,42 @@ import { ChatService       } from '../../../Services/chat.service';
 })
 export class ChatComponent implements OnInit {
   parentData: any[] = [];
-
-  constructor(private chatService: ChatService) {}
+  @ViewChild("_txtName")    txtName:any;
+  @ViewChild("_txtMessage") txtMessage:any;
+  constructor(private chatService: ChatService,private datePipe: DatePipe) {}
 
   ngOnInit() {
     this.chatService.getMessages().subscribe(messages => this.parentData = messages);
     this.chatService.onNewMessage.subscribe(message   => this.NotifyingMessage(message));
   }
-
+  //
   NotifyingMessage(message: string): void {
     console.log("Pushing data to client : " + message);
     //this.parentData.push(message);
     console.log("Message Array (client) : " + this.parentData);
   }
-
-  sendMessage(name : string,message: string) {
+  //
+  submitForm(form: NgForm) {
+    if (form.valid) {
+      // Handle form submission logic
+      console.log(form.value); // Access form values
+      //
+      let name    = form.value['txtName'];
+      let message = form.value['txtMessage'];
+      //
+      this.sendMessage(name,message);
+    }
+  }
+  //  
+  sendMessage(name : string ,message: string) {
     //
-    let messageToSend : string = `[${name}] Says: "${message}"`;
+    const currentDate = new Date();
+    let formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd HH:mm:ss');
+    //
+    let messageToSend : string = `[${formattedDate}] -[${name}] Says: "${message}"`;
     //
     console.log("sending message: {" + message + "}");
     //
-    this.chatService.sendMessage(message);
+    this.chatService.sendMessage(messageToSend);
   }
 }
