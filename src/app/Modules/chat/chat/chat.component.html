@@ -3,9 +3,12 @@
 <h4>[MESSAGES]</h4>
 <!-- MESSAGES / INICIO -->
 <hr>
+<label for="txtMessage">Your Name:</label>
+<input type="text" #txtName>
+|
 <label for="txtMessage">Ingese Mensaje :</label>
 <input type="text" #txtMessage>
-<input type="button" value="[SEND MESSAGE]" (click)="this.sendMessage(txtMessage.value)">
+<input type="button" value="[SEND MESSAGE]" (click)="this.sendMessage(txtName.value,txtMessage.value)">
 <hr>
 <!--app-message 
         [dataFromParent]="this.parentData"

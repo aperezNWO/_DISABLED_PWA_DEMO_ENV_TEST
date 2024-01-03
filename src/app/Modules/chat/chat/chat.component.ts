@@ -22,8 +22,12 @@ export class ChatComponent implements OnInit {
     console.log("Message Array (client) : " + this.parentData);
   }
 
-  sendMessage(message: string) {
-    console.log("sending message: ", message);
+  sendMessage(name : string,message: string) {
+    //
+    let messageToSend : string = `[${name}] Says: "${message}"`;
+    //
+    console.log("sending message: {" + message + "}");
+    //
     this.chatService.sendMessage(message);
   }
 }
