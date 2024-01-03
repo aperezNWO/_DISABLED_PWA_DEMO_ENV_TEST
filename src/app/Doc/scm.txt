@@ -55,3 +55,24 @@ Socket.IO Client: npm install socket.io-client
 --[_] app-shell
 -------------------------------------------------------------
 ng run sandbox:app-shell:production  
+
+
+-------------------------------------------------------------
+--[_] hosting
+-------------------------------------------------------------
+
+¿where can I host an angula and node.js application for free?
+
+¿How can I host a node.js page in github pages?
+
+https://chat.openai.com/share/91515abd-1f5d-48c8-b8d2-529ae88a094d
+
+¿where can I host an angula and node.js application for free?
+
+https://g.co/bard/share/f615e1c2cb68
+
+¿How can I host a node.js page in github pages?
+
+https://g.co/bard/share/0ff09e2380c7
+
+[EXPORT BARD ANSWERS TO GOOGLE DOCUMENTS]
