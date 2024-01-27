@@ -131,7 +131,8 @@ export class AlgorithmService {
   ////////////////////////////////////////////////////////////////
   _TestNodeJs(): Observable<string> {
     //
-    let p_url: string = `https://ms7tks-4000.csb.app/databaseconnect`;
+    let p_url: string = `${this.__baseUrlNodeJs}databaseconnect`;
+    //let p_url: string = `https://ms7tks-4000.csb.app/databaseconnect`;
     //let p_url: string ='https://fluffy-space-barnacle-vrwvjp6qjvphw9g-4000.app.github.dev/databaseconnect';
     //
     let nodeJsOutput: Observable<string> = this.http.get<string>(
