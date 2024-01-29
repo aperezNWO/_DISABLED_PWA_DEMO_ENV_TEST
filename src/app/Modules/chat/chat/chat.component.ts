@@ -1,8 +1,8 @@
 // chat.component.ts
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChatService       } from '../../../Services/chat.service';
-import { DatePipe          } from '@angular/common';
-import { NgForm } from '@angular/forms';
+import { ChatService                  } from '../../../Services/chat.service';
+import { DatePipe                     } from '@angular/common';
+import { NgForm                       } from '@angular/forms';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
