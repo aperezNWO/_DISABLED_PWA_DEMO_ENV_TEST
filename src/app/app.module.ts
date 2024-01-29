@@ -21,6 +21,7 @@ import { HanoiTowersComponent          } from './Modules/Games/hanoi-towers/game
 import { MessageComponent              } from './Modules/chat/message/message.component';
 import { ChatComponent                 } from './Modules/chat/chat/chat.component';
 import { BoardOnlineComponent          } from './Modules/Games/tic-tac-toe/tic-tac-toe-online/board/board.component';
+import { OcrComponent                  } from './Modules/ocr/ocr/ocr.component';
 import { ConfigService                 } from './Services/config.service';
 import { ServiceWorkerModule           } from '@angular/service-worker';
 //
@@ -32,6 +33,7 @@ const routes = [
   { path: 'Hanoi'            , component: HanoiTowersComponent       },
   { path: 'UnitTesting'      , component: UntTestingComponent        },
   { path: 'Chat'             , component: ChatComponent              },
+  { path: 'Ocr'              , component: OcrComponent               },
   { path: '**'               , component: AppComponent               },
 ];
 
