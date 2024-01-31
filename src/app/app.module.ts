@@ -24,6 +24,7 @@ import { BoardOnlineComponent          } from './Modules/Games/tic-tac-toe/tic-t
 import { OcrComponent                  } from './Modules/ocr/ocr/ocr.component';
 import { ConfigService                 } from './Services/config.service';
 import { ServiceWorkerModule           } from '@angular/service-worker';
+
 //
 const routes = [
   { path: 'Home'             , component: HomeComponent              },
@@ -43,7 +44,18 @@ export function loadConfig(configService: ConfigService) {
 }
 
 @NgModule({
-    declarations: [AppComponent, HomeComponent, SudokuComponent, TicTacToeComponent, HanoiTowersComponent, UntTestingComponent, MessageComponent, ChatComponent, TicTacToeOnlineComponent ],
+    declarations: [
+                    AppComponent, 
+                    HomeComponent, 
+                    SudokuComponent, 
+                    TicTacToeComponent, 
+                    HanoiTowersComponent, 
+                    UntTestingComponent, 
+                    MessageComponent, 
+                    ChatComponent, 
+                    TicTacToeOnlineComponent, 
+                    OcrComponent, 
+                  ],
     providers: [DatePipe, HttpClient, provideClientHydration(),
       [
         ConfigService,
