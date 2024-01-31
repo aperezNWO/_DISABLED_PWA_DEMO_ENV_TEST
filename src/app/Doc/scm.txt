@@ -2,7 +2,11 @@
 // SCM
 ////////////////////////////////////////////////////////////////////////////
 
---[_] https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/
+--[_] URL PROD : https://apereznwo.github.io/CS_WebApiAngularDemo-forked-/
+
+--[_] SETUP :
+
+        --[_] npm install --legacy-peer-deps 
 
 -----------------------------------------------------------------------
 --[_] DEPLOY ON GITHUB CODESPACES
